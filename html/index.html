@@ -207,7 +207,6 @@
         <section class="container my-5" aria-labelledby="temasDestaqueTitle">
             <h2 id="temasDestaqueTitle" class="visually-hidden">Temas em Destaque</h2>
             <div class="row g-4">
-                
                 <div class="col-md-3 col-sm-6">
                     <div class="card h-100 card-animado position-relative">
                         <img
@@ -223,7 +222,7 @@
                                 com quem você ama, mesmo à distância.
                             </p>
                             <a 
-                                href="videochamada.html" 
+                                href="desvendando-camera.html" 
                                 class="btn-verde stretched-link"
                                 aria-label="Ver mais sobre Conexão com quem importa (ir para aula de videochamada)"
                             >Ver mais</a>
@@ -246,9 +245,9 @@
                                 para se comunicar e se divertir com segurança.
                             </p>
                             <a 
-                                href="redes_sociais.html" 
+                                href="whatsapp.html" 
                                 class="btn-verde stretched-link"
-                                aria-label="Ver mais sobre Redes Sociais sem mistério (ir para página de redes sociais)"
+                                aria-label="Ver mais sobre Redes Sociais sem mistério (ir para lista de aulas)"
                             >Ver mais</a>
                         </div>
                     </div>
@@ -269,9 +268,9 @@
                                 evitando golpes e aproveitando boas ofertas.
                             </p>
                             <a 
-                                href="compras_online.html" 
+                                href="compras-online-seguranca.html" 
                                 class="btn-verde stretched-link"
-                                aria-label="Ver mais sobre Compras seguras na internet (ir para página de compras online)"
+                                aria-label="Ver mais sobre Compras seguras na internet (ir para lista de aulas)"
                             >Ver mais</a>
                         </div>
                     </div>
@@ -502,6 +501,8 @@
             // 2. Inicializa o carrossel 
             const carrossel = document.querySelector('#carrosselConectaVo');
             if (carrossel) {
+                // Remove a necessidade de instanciar, pois 'data-bs-ride="carousel"' já faz isso.
+                // Mantemos para customização futura, se necessário.
                 new bootstrap.Carousel(carrossel, {
                     interval: 3000,
                     ride: 'carousel',
