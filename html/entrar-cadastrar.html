@@ -8,6 +8,7 @@
     <meta name="description" content="Acesse sua conta ou cadastre-se no Conecta Vó para acompanhar seu progresso nas aulas, gerenciar seu perfil e participar da comunidade." />
     <meta name="keywords" content="login, cadastro, entrar, criar conta, acesso, plataforma digital, aluno, perfil" />
     <meta name="author" content="Conecta Vó Team" />
+
     <link 
     rel="icon" 
     href="../assets/logo_cvo.ico">
@@ -18,33 +19,51 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="/styles/style.css" />
 
 </head>
 <body>
 
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-message">
+                    Mensagem de sucesso aqui.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button>
+            </div>
+        </div>
+    </div>
+    
     <header
       class="header-container bg-light py-2 shadow-sm d-flex flex-wrap justify-content-between align-items-center"
     >
       <span class="text-muted fw-semibold fs-5 ms-5 d-none d-md-block"
         >Tecnologia com carinho. Conectando gerações.</span
       >
-      <a href="entrar-cadastrar.html" class="ms-auto me-5">
-        <button class="btn btn-outline-secondary btn-sm fs-6">
-          Entrar / Cadastrar
-        </button>
-      </a>
+
+      <div id="user-controls" class="d-flex align-items-center ms-auto me-5 gap-3">
+        <a href="entrar-cadastrar.html" id="link-login-header">
+          <button class="btn btn-outline-secondary btn-sm fs-6">
+            Entrar / Cadastrar
+          </button>
+        </a>
+        
+        <div id="user-info-header" class="d-none align-items-center gap-2">
+            <span class="text-teal fw-semibold fs-6" id="user-greeting">Olá, Usuário!</span>
+            <button id="btn-logout" class="btn btn-sm btn-outline-danger fs-6">
+                Sair
+            </button>
+        </div>
+      </div>
     </header>
 
     <nav class="navbar-principal shadow">
@@ -98,6 +117,7 @@
 
     <main class="container-principal py-5">
         <section class="form-voluntario-card mx-auto" style="max-width: 600px;">
+            
             <div id="formulario-login-container">
                 <h2 class="text-center text-teal mb-3">Acesse sua conta</h2>
                 <p class="text-center text-muted mb-4">Faça login para acompanhar seu progresso nas aulas e ganhar medalhas!</p>
@@ -205,37 +225,169 @@
     ></script>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const loginFormContainer = document.getElementById('formulario-login-container');
-        const cadastroFormContainer = document.getElementById('formulario-cadastro-container');
-        const linkCadastro = document.getElementById('link-cadastro');
-        const linkLogin = document.getElementById('link-login');
+        // --- Variáveis Globais (Local Storage Keys) ---
+        const LOGGED_KEY = 'conectaVo_logged';
+        const USER_NAME_KEY = 'conectaVo_userName';
 
-        if (linkCadastro && linkLogin) {
-          linkCadastro.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginFormContainer.classList.add('oculto');
-            cadastroFormContainer.classList.remove('oculto');
-          });
 
-          linkLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            cadastroFormContainer.classList.add('oculto');
-            loginFormContainer.classList.remove('oculto');
-          });
+        // --- Funções de Feedback (Toast) ---
+
+        function showToast(message, type = 'success') {
+            const toastEl = document.getElementById('liveToast');
+            if (!toastEl) return; // Garante que o toast existe no DOM
+            
+            const toastContainer = toastEl.parentElement;
+
+            // Clona o modelo do toast
+            const newToastEl = toastEl.cloneNode(true);
+            newToastEl.id = ''; 
+
+            // Atualiza a mensagem e o estilo
+            const toastBody = newToastEl.querySelector('#toast-message');
+            if (toastBody) toastBody.textContent = message;
+            
+            // Remove classes de cor anteriores e adiciona a nova
+            newToastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'bg-info');
+            newToastEl.classList.add(`bg-${type}`);
+            
+            // Adiciona ao container e exibe
+            toastContainer.appendChild(newToastEl);
+            const toast = new bootstrap.Toast(newToastEl);
+            toast.show();
+
+            // Remove o toast do DOM após fechar/expirar
+            newToastEl.addEventListener('hidden.bs.toast', () => {
+                newToastEl.remove();
+            });
         }
-      });
 
-      function toggleBusca() {
-        const campo = document.getElementById('campoBusca');
-        campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
-      }
+        // --- Funções de Estado (Checagem e Atualização do Header) ---
 
-      function buscarConteudo(event) {
-        event.preventDefault();
-        const termo = event.target.querySelector('input').value;
-        alert(`Você buscou por: "${termo}"`);
-      }
+        function updateHeaderState() {
+            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+            const userName = localStorage.getItem(USER_NAME_KEY);
+            
+            const loginLink = document.getElementById('link-login-header');
+            const userInfoHeader = document.getElementById('user-info-header');
+            const userGreeting = document.getElementById('user-greeting');
+
+            if (loggedIn && userName) {
+                // Estado Logado
+                if (loginLink) loginLink.classList.add('d-none');
+                if (userInfoHeader) {
+                    userInfoHeader.classList.remove('d-none');
+                    userInfoHeader.classList.add('d-flex');
+                }
+                if (userGreeting) userGreeting.textContent = `Olá, ${userName}!`;
+            } else {
+                // Estado Deslogado
+                if (loginLink) loginLink.classList.remove('d-none');
+                if (userInfoHeader) {
+                    userInfoHeader.classList.add('d-none');
+                    userInfoHeader.classList.remove('d-flex');
+                }
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem(LOGGED_KEY);
+            localStorage.removeItem(USER_NAME_KEY);
+            showToast('Você saiu da sua conta.', 'warning');
+            
+            // Redireciona para a página principal após um breve delay para mostrar o toast
+            setTimeout(() => {
+                window.location.href = 'index.html'; 
+            }, 1000); 
+        }
+
+
+        // --- Funções de Formulário e Busca ---
+
+        function toggleBusca() {
+            const campo = document.getElementById('campoBusca');
+            campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function buscarConteudo(event) {
+            event.preventDefault();
+            const termo = event.target.querySelector('input').value;
+            showToast(`Você buscou por: "${termo}"`, 'info'); 
+        }
+
+        // --- Inicialização de Eventos ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Inicializa o estado do header ao carregar a página
+            updateHeaderState();
+
+            // 2. Lógica de Alternância de Login/Cadastro
+            const loginFormContainer = document.getElementById('formulario-login-container');
+            const cadastroFormContainer = document.getElementById('formulario-cadastro-container');
+            const linkCadastro = document.getElementById('link-cadastro');
+            const linkLogin = document.getElementById('link-login');
+            const btnLogout = document.getElementById('btn-logout');
+
+            if (linkCadastro && linkLogin) {
+                linkCadastro.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginFormContainer.classList.add('oculto');
+                    cadastroFormContainer.classList.remove('oculto');
+                });
+
+                linkLogin.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    cadastroFormContainer.classList.add('oculto');
+                    loginFormContainer.classList.remove('oculto');
+                });
+            }
+            
+            // 3. Simulação de Cadastro e Salvar Nome
+            const formCadastro = document.getElementById('formulario-cadastro');
+            if(formCadastro) {
+                formCadastro.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const nomeInput = document.getElementById('nome-cadastro').value;
+                    const firstName = nomeInput.split(' ')[0]; 
+
+                    // Salva o nome no LocalStorage
+                    localStorage.setItem(USER_NAME_KEY, firstName);
+                    
+                    showToast(`Cadastro de ${firstName} realizado com sucesso! Faça login para começar.`, 'success');
+                    
+                    // Alterna para a tela de login após um breve delay para leitura
+                    setTimeout(() => {
+                        cadastroFormContainer.classList.add('oculto');
+                        loginFormContainer.classList.remove('oculto');
+                    }, 800);
+                });
+            }
+
+            // 4. Simulação de Login, Exibir Nome e Redirecionamento
+            const formLogin = document.getElementById('formulario-login');
+            if(formLogin) {
+                formLogin.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const userName = localStorage.getItem(USER_NAME_KEY) || 'Aluno(a)';
+                    
+                    // Define o estado de login
+                    localStorage.setItem(LOGGED_KEY, 'true');
+                    
+                    showToast(`Login efetuado com sucesso! Bem-vindo(a), ${userName}.`, 'success');
+                    
+                    // Redireciona após um breve delay para a página de aulas
+                    setTimeout(() => {
+                        window.location.href = 'aulas.html'; 
+                    }, 1500);
+                });
+            }
+
+            // 5. Adiciona o evento de Logout
+            if (btnLogout) {
+                btnLogout.addEventListener('click', handleLogout);
+            }
+        });
     </script>
 </body>
 </html>
