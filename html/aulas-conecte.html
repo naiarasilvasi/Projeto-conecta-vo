@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Videochamada - Conecta Vó</title>
+    <title>Aula: Como Fazer uma Videochamada - Conecta Vó</title>
+    <meta name="description" content="Assista à aula completa e aprenda o passo a passo de como fazer uma videochamada com seus familiares e amigos usando aplicativos populares de forma simples e segura." />
+    <meta name="keywords" content="videochamada, como ligar por vídeo, WhatsApp, chamada de vídeo, aula digital, idoso, Conecta Vó" />
+    <meta name="author" content="Conecta Vó" />
 
     <link 
     rel="icon" 
@@ -31,24 +34,46 @@
 </head>
 <body>
 
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-message">
+                    Mensagem de sucesso aqui.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar notificação"></button>
+            </div>
+        </div>
+    </div>
+
     <header
       class="header-container bg-light py-2 shadow-sm d-flex flex-wrap justify-content-between align-items-center"
     >
       <span class="text-muted fw-semibold fs-5 ms-5 d-none d-md-block"
         >Tecnologia com carinho. Conectando gerações.</span
       >
-      <a href="entrar-cadastrar.html" class="ms-auto me-5">
-        <button class="btn btn-outline-secondary btn-sm fs-6">
-          Entrar / Cadastrar
-        </button>
-      </a>
+
+      <div id="user-controls" class="d-flex align-items-center ms-auto me-5 gap-3">
+            <a href="entrar-cadastrar.html" id="link-login-header" title="Acesse sua conta ou crie um novo cadastro">
+                <button class="btn btn-outline-secondary btn-sm fs-6">
+                    Entrar / Cadastrar
+                </button>
+            </a>
+            
+            <div id="user-info-header" class="d-none align-items-center gap-2">
+                <span class="text-teal fw-semibold fs-6" id="user-greeting" aria-live="polite">Olá, Usuário!</span>
+                <button id="btn-logout" class="btn btn-sm btn-outline-danger fs-6" title="Sair da sua conta">
+                    Sair
+                </button>
+            </div>
+        </div>
+
     </header>
 
-    <nav class="navbar-principal shadow">
+    <nav class="navbar-principal shadow" style="background-color: #18a5a7; padding: 1.5rem 0;">
       <div
         class="container d-flex flex-wrap justify-content-between align-items-center"
       >
-        <a href="index.html" class="logo">
+        <a href="index.html" class="logo" title="Ir para a página inicial Conecta Vó">
           <img src="/assets/logo.png" alt="Logo Conecta Vó" height="80" />
         </a>
 
@@ -69,26 +94,27 @@
 
         <div class="botoes-acao d-flex align-items-center gap-3 me-4">
           <a href="voluntario.html">
-            <button class="btn-voluntario">Seja Voluntário</button>
+            <button class="btn btn-voluntario" title="Torne-se um voluntário e ajude a conectar gerações">Seja Voluntário</button>
           </a>
           <i
             class="bi bi-search text-white busca-icon"
             onclick="toggleBusca()"
-            title="Buscar"
+            title="Buscar conteúdo na plataforma"
+            aria-label="Abrir campo de busca"
           ></i>
         </div>
       </div>
     </nav>
 
     <div id="campoBusca" class="container mt-3" style="display: none">
-      <form class="d-flex" onsubmit="buscarConteudo(event)">
+      <form class="d-flex" onsubmit="buscarConteudo(event)" role="search">
         <input
           class="form-control me-2"
           type="search"
           placeholder="Buscar conteúdo..."
-          aria-label="Buscar"
+          aria-label="Buscar conteúdo no Conecta Vó"
         />
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
+        <button class="btn btn-outline-success" type="submit" aria-label="Executar busca">Buscar</button>
       </form>
     </div>
 
@@ -96,68 +122,70 @@
       <div class="row justify-content-center">
         <div class="col-lg-10">
           <h1 class="main-title text-teal mb-2 text-center">Como Fazer uma Videochamada</h1>
-          <p class="lead subtitle-lead text-center mb-4">Aprenda a se conectar com seus amigos e familiares de um jeito simples!</p>
+          <h2 class="lead subtitle-lead text-center mb-4">Aprenda a se conectar com seus amigos e familiares de um jeito simples!</h2>
 
-          <div class="ratio ratio-16x9 mb-4">
+          <div class="ratio ratio-16x9 mb-4" role="region" aria-label="Player de vídeo da aula sobre videochamada">
             <iframe
               src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="Videochamada"
+              title="Vídeo-Aula: Como fazer uma videochamada"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
             ></iframe>
           </div>
 
           <div class="d-flex justify-content-center justify-content-md-start gap-3 mb-4 flex-wrap">
-            <button class="btn btn-lg btn-verde btn-acao">
-              <i class="bi bi-check-circle-fill"></i> Finalizar Lição e Ganhar 100 Pontos!
+            <button class="btn btn-lg btn-verde btn-acao" onclick="finalizarLicao(100)" aria-label="Finalizar lição e ganhar 100 pontos">
+              <i class="bi bi-check-circle-fill" aria-hidden="true"></i> Finalizar Lição e Ganhar 100 Pontos!
             </button>
-            <button class="btn btn-lg btn-download btn-acao" data-bs-toggle="modal" data-bs-target="#modalDownload">
-              <i class="bi bi-file-earmark-arrow-down"></i> Download
+            <button class="btn btn-lg btn-download btn-acao" data-bs-toggle="modal" data-bs-target="#modalDownload" aria-label="Abrir opções de download de material de apoio">
+              <i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i> Download
             </button>
-            <button class="btn btn-lg btn-gostei btn-acao">
-              <i class="bi bi-hand-thumbs-up"></i> Gostei
+            <button class="btn btn-lg btn-gostei btn-acao" onclick="darLike()" aria-label="Marcar que gostou desta aula">
+              <i class="bi bi-hand-thumbs-up" aria-hidden="true"></i> Gostei (<span id="like-count">0</span>)
             </button>
           </div>
 
           <hr class="mb-4" />
 
-          <section class="mb-5">
-            <h4>Descrição da Aula</h4>
+          <section class="mb-5" aria-labelledby="descricaoTitulo">
+            <h3 id="descricaoTitulo">Descrição da Aula</h3>
             <p>
               Nesta aula, você vai aprender o passo a passo de como realizar uma videochamada utilizando os aplicativos mais populares. Descubra como ligar para seus familiares e amigos de forma gratuita, simples e segura.
             </p>
           </section>
 
-          <section class="mb-5">
-            <h4>Comentários</h4>
-            <div class="card mb-3 p-3">
+          <section class="mb-5" aria-labelledby="comentariosTitulo">
+            <h3 id="comentariosTitulo">Comentários</h3>
+            <div class="card mb-3 p-3" role="status">
               <p class="mb-1 fw-bold">Maria Silva</p>
               <p>
                 Ótima aula! Agora consigo falar com meus netos todos os dias. Muito obrigada!
               </p>
             </div>
-            <div class="card mb-3 p-3">
+            <div class="card mb-3 p-3" role="status">
               <p class="mb-1 fw-bold">João Pereira</p>
               <p>
                 As instruções foram muito claras e fáceis de seguir. Recomendo para todos que têm dificuldade com tecnologia!
               </p>
             </div>
-            <form>
+            <form onsubmit="adicionarComentario(event)">
               <div class="mb-3">
                 <label for="comentario" class="form-label">Deixe seu comentário</label>
-                <textarea class="form-control" id="comentario" rows="3"></textarea>
+                <textarea class="form-control" id="comentario" rows="3" aria-label="Escreva seu comentário sobre a aula"></textarea>
               </div>
-              <button type="submit" class="btn btn-verde">Enviar Comentário</button>
+              <button type="submit" class="btn btn-verde" aria-label="Enviar o comentário">Enviar Comentário</button>
             </form>
           </section>
 
-          <section>
-            <h4>Próximas Aulas</h4>
+          <section aria-labelledby="proximasAulasTitulo">
+            <h3 id="proximasAulasTitulo">Próximas Aulas</h3>
             <div class="row row-cols-1 row-cols-md-2 g-3">
               <div class="col">
-                <a href="#" class="text-decoration-none text-dark video-card-miniatura">
+                <a href="#" class="text-decoration-none text-dark video-card-miniatura" title="Ir para a aula WhatsApp Essencial">
                   <div class="row g-0">
                     <div class="col-5">
-                      <img src="/assets/aulas_WhatsApp_Essencial.png" class="img-fluid" alt="Miniatura de Aula de WhatsApp" />
+                      <img src="/assets/aulas_WhatsApp_Essencial.png" class="img-fluid" alt="Miniatura de Aula de WhatsApp Essencial" />
                     </div>
                     <div class="col-7 p-3">
                       <h6 class="fw-bold mb-0">WhatsApp Essencial</h6>
@@ -167,10 +195,10 @@
                 </a>
               </div>
               <div class="col">
-                <a href="#" class="text-decoration-none text-dark video-card-miniatura">
+                <a href="#" class="text-decoration-none text-dark video-card-miniatura" title="Ir para a aula E-mail Sem Segredos">
                   <div class="row g-0">
                     <div class="col-5">
-                      <img src="/assets/aulas_E_mail_Sem_Segredos.png" class="img-fluid" alt="Miniatura de Aula de E-mail" />
+                      <img src="/assets/aulas_E_mail_Sem_Segredos.png" class="img-fluid" alt="Miniatura de Aula de E-mail Sem Segredos" />
                     </div>
                     <div class="col-7 p-3">
                       <h6 class="fw-bold mb-0">E-mail Sem Segredos</h6>
@@ -180,7 +208,7 @@
                 </a>
               </div>
               <div class="col">
-                <a href="#" class="text-decoration-none text-dark video-card-miniatura">
+                <a href="#" class="text-decoration-none text-dark video-card-miniatura" title="Ir para a aula Bancos e PIX">
                   <div class="row g-0">
                     <div class="col-5">
                       <img src="/assets/aulas_Bancos_e_PIX.png" class="img-fluid" alt="Miniatura de Aula de Bancos e PIX" />
@@ -196,46 +224,44 @@
           </section>
 
           <div class="text-center mt-4">
-              <a href="aulas_conecte.html" class="btn btn-outline-secondary fw-semibold">Ver mais aulas</a>
+            <a href="aulas_conecte.html" class="btn btn-outline-secondary fw-semibold">Ver mais aulas</a>
           </div>
         </div>
       </div>
     </main>
 
     <footer class="bg-teal text-white py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
-            <a href="index.html" class="d-inline-block mb-3">
-              <img src="/assets/logo.png" alt="Logo Conecta Vó" height="80" />
-            </a>
-            <p class="mb-0">Tecnologia com carinho. Conectando gerações.</p>
-          </div>
-
-          <div class="col-md-4 text-center mb-4 mb-md-0">
-            <h5>Navegação</h5>
-            <ul class="list-unstyled d-flex flex-column flex-md-row justify-content-center gap-3">
-              <li><a href="index.html" class="text-white text-decoration-none">Início</a></li>
-              <li><a href="sobre.html" class="text-white text-decoration-none">Sobre</a></li>
-              <li><a href="aulas_conecte.html" class="text-white text-decoration-none">Aulas</a></li>
-              <li><a href="ajuda.html" class="text-white text-decoration-none">Ajuda</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-4 text-center text-md-end">
-            <h5>Siga-nos</h5>
-            <a href="https://www.facebook.com/" class="social-icon text-white me-3"><i class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/" class="social-icon text-white me-3"><i class="bi bi-instagram"></i></a>
-            <a href="https://twitter.com/" class="social-icon text-white"><i class="bi bi-twitter"></i></a>
-          </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+                    <a href="index.html" class="d-inline-block mb-3" title="Voltar para o Início">
+                        <img src="/assets/logo.png" alt="Logo Conecta Vó" height="80" />
+                    </a>
+                    <p class="mb-0">Tecnologia com carinho. Conectando gerações.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <h5>Navegação</h5>
+                    <ul class="list-unstyled d-flex flex-column flex-md-row justify-content-center gap-3">
+                        <li><a href="index.html" class="text-white text-decoration-none">Início</a></li>
+                        <li><a href="sobre.html" class="text-white text-decoration-none">Sobre</a></li>
+                        <li><a href="aulas_conecte.html" class="text-white text-decoration-none">Aulas</a></li>
+                        <li><a href="ajuda.html" class="text-white text-decoration-none">Ajuda</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Siga-nos</h5>
+                    <a href="https://www.facebook.com/" class="social-icon text-white me-3" target="_blank" rel="noopener noreferrer" aria-label="Siga-nos no Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/" class="social-icon text-white me-3" target="_blank" rel="noopener noreferrer" aria-label="Siga-nos no Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://twitter.com/" class="social-icon text-white" target="_blank" rel="noopener noreferrer" aria-label="Siga-nos no Twitter"><i class="bi bi-twitter"></i></a>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3 border-light">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">Copyright © 2025 Conecta Vó. Todos os direitos reservados.</p>
+                </div>
+            </div>
         </div>
-        <hr class="mt-4 mb-3 border-light">
-        <div class="row">
-          <div class="col-12 text-center">
-            <p class="mb-0">Copyright © 2025 Conecta Vó. Todos os direitos reservados.</p>
-          </div>
-        </div>
-      </div>
     </footer>
 
     <div class="modal fade" id="modalDownload" tabindex="-1" aria-labelledby="modalDownloadLabel" aria-hidden="true">
@@ -243,16 +269,16 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalDownloadLabel">Escolha o material para download</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body text-center">
             <p class="lead">O que você gostaria de baixar?</p>
             <div class="d-flex justify-content-center gap-3">
-              <a href="#" download="aula-videochamada.pdf" class="btn btn-verde">
-                <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+              <a href="#" download="aula-videochamada.pdf" class="btn btn-verde" aria-label="Baixar o guia em formato PDF">
+                <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Baixar PDF
               </a>
-              <a href="#" download="aula-videochamada.mp4" class="btn btn-verde">
-                <i class="bi bi-camera-video"></i> Baixar Vídeo
+              <a href="#" download="aula-videochamada.mp4" class="btn btn-verde" aria-label="Baixar o vídeo da aula">
+                <i class="bi bi-camera-video" aria-hidden="true"></i> Baixar Vídeo
               </a>
             </div>
           </div>
@@ -267,16 +293,178 @@
     ></script>
 
     <script>
-      function toggleBusca() {
-        const campo = document.getElementById('campoBusca');
-        campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
-      }
+        // --- Variáveis Globais (Local Storage Keys) ---
+        const LOGGED_KEY = 'conectaVo_logged';
+        const USER_NAME_KEY = 'conectaVo_userName';
+        const USER_POINTS_KEY = 'conectaVo_userPoints';
+        const LIKE_COUNT_KEY = 'conectaVo_videochat_likes';
 
-      function buscarConteudo(event) {
-        event.preventDefault();
-        const termo = event.target.querySelector('input').value;
-        alert(`Você buscou por: "${termo}"`);
-      }
+        // Inicializa o contador de likes no Local Storage, se não existir
+        if (!localStorage.getItem(LIKE_COUNT_KEY)) {
+            localStorage.setItem(LIKE_COUNT_KEY, 0);
+        }
+
+        // --- Funções de Feedback (Toast) ---
+        function showToast(message, type = 'success') {
+            const toastContainer = document.querySelector('.toast-container');
+            if (!toastContainer) return; 
+            
+            // Cria um novo elemento Toast do zero
+            const newToastEl = document.createElement('div');
+            newToastEl.classList.add('toast', 'align-items-center', 'text-white', 'border-0');
+            newToastEl.classList.add(`bg-${type}`);
+            newToastEl.setAttribute('role', 'alert');
+            newToastEl.setAttribute('aria-live', 'assertive');
+            newToastEl.setAttribute('aria-atomic', 'true');
+            newToastEl.setAttribute('data-bs-delay', '5000');
+
+            newToastEl.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar notificação"></button>
+                </div>
+            `;
+            
+            toastContainer.appendChild(newToastEl);
+            const toast = new bootstrap.Toast(newToastEl);
+            toast.show();
+
+            newToastEl.addEventListener('hidden.bs.toast', () => {
+                newToastEl.remove();
+            });
+        }
+
+        // --- Funções de Estado (Checagem e Atualização do Header) ---
+
+        function updateHeaderState() {
+            // Simulação de login
+            if (!localStorage.getItem(USER_POINTS_KEY)) {
+                localStorage.setItem(USER_POINTS_KEY, 50); // Ponto inicial simulado
+            }
+
+            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+            const userName = localStorage.getItem(USER_NAME_KEY);
+
+            const loginLink = document.getElementById('link-login-header');
+            const userInfoHeader = document.getElementById('user-info-header');
+            const userGreeting = document.getElementById('user-greeting');
+            const btnLogout = document.getElementById('btn-logout');
+
+            if (loggedIn && userName) {
+                // Estado Logado
+                if (loginLink) loginLink.classList.add('d-none');
+                if (userInfoHeader) {
+                    userInfoHeader.classList.remove('d-none');
+                    userInfoHeader.classList.add('d-flex');
+                }
+                if (userGreeting) userGreeting.textContent = `Olá, ${userName}!`;
+                
+                // Adiciona o evento de Logout
+                if (btnLogout) {
+                    btnLogout.removeEventListener('click', handleLogout); // Prevenção de duplicação
+                    btnLogout.addEventListener('click', handleLogout);
+                }
+            } else {
+                // Estado Deslogado
+                if (loginLink) loginLink.classList.remove('d-none');
+                if (userInfoHeader) {
+                    userInfoHeader.classList.add('d-none');
+                    userInfoHeader.classList.remove('d-flex');
+                }
+            }
+
+            // Atualiza o contador de likes
+            const likeCount = localStorage.getItem(LIKE_COUNT_KEY) || 0;
+            document.getElementById('like-count').textContent = likeCount;
+        }
+
+        function handleLogout() {
+            localStorage.removeItem(LOGGED_KEY);
+            localStorage.removeItem(USER_NAME_KEY);
+            showToast('Você saiu da sua conta. Até mais!', 'warning');
+            
+            setTimeout(() => {
+                window.location.reload(); 
+            }, 1000); 
+        }
+
+        // --- Funções da Página ---
+
+        function toggleBusca() {
+            const campo = document.getElementById('campoBusca');
+            campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function buscarConteudo(event) {
+            event.preventDefault();
+            const termo = event.target.querySelector('input').value.trim();
+            if (termo) {
+                showToast(`Você buscou por: "${termo}"`, 'info'); 
+                event.target.querySelector('input').value = '';
+            } else {
+                showToast('Por favor, digite um termo para buscar.', 'warning');
+            }
+        }
+        
+        function finalizarLicao(pontos) {
+            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+            if (!loggedIn) {
+                 showToast('Você precisa estar logado para ganhar pontos!', 'danger');
+                 return;
+            }
+
+            let currentPoints = parseInt(localStorage.getItem(USER_POINTS_KEY)) || 0;
+            currentPoints += pontos;
+            localStorage.setItem(USER_POINTS_KEY, currentPoints);
+
+            showToast(`Parabéns! Você ganhou ${pontos} pontos por finalizar a lição. Total: ${currentPoints} pontos.`, 'success');
+            
+            // Desabilita o botão para evitar pontos duplicados
+            const btn = document.querySelector('.btn-verde.btn-acao');
+            btn.disabled = true;
+            btn.textContent = "Lição Finalizada!";
+        }
+
+        function darLike() {
+            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+            if (!loggedIn) {
+                 showToast('Você precisa estar logado para interagir!', 'danger');
+                 return;
+            }
+
+            let currentLikes = parseInt(localStorage.getItem(LIKE_COUNT_KEY));
+            currentLikes += 1;
+            localStorage.setItem(LIKE_COUNT_KEY, currentLikes);
+            document.getElementById('like-count').textContent = currentLikes;
+            showToast('Obrigado por curtir a aula!', 'info');
+
+            // Desabilita o botão para evitar likes duplicados (simulação)
+            const btn = document.querySelector('.btn-gostei.btn-acao');
+            btn.disabled = true;
+        }
+
+        function adicionarComentario(event) {
+             event.preventDefault();
+             const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+             const comentarioText = document.getElementById('comentario').value.trim();
+
+            if (!loggedIn) {
+                 showToast('Você precisa estar logado para comentar!', 'danger');
+                 return;
+            }
+
+            if (comentarioText.length < 5) {
+                 showToast('Seu comentário é muito curto.', 'warning');
+                 return;
+            }
+
+            // Simulação de adição de comentário (em um sistema real, isso seria um POST para o servidor)
+            showToast('Seu comentário foi enviado com sucesso!', 'success');
+            document.getElementById('comentario').value = '';
+        }
+
+        // --- Inicialização ---
+        document.addEventListener('DOMContentLoaded', updateHeaderState);
     </script>
 </body>
 </html>
