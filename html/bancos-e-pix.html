@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: Bancos e PIX - Conecta Vó</title>
+    <meta name="description" content="Guia simples para usar o aplicativo do seu banco, fazer transferências seguras via PIX e se proteger de fraudes financeiras online." />
+    <meta name="keywords" content="banco, PIX, aplicativo de banco, transferência, segurança financeira, fraude, aula digital, idoso, Conecta Vó" />
+    <meta name="author" content="Conecta Vó" />
+
+    <link 
+    rel="icon" 
+    href="../assets/logo cvo.ico">
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/styles/style.css" />
+
+</head>
+<body>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-message">
+                    Mensagem de sucesso aqui.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar notificação"></button>
+            </div>
+        </div>
+    </div>
+
+    <header
+      class="header-container bg-light py-2 shadow-sm d-flex flex-wrap justify-content-between align-items-center"
+    >
+      <span class="text-muted fw-semibold fs-5 ms-5 d-none d-md-block"
+        >Tecnologia com carinho. Conectando gerações.</span
+      >
+
+      <div id="user-controls" class="d-flex align-items-center ms-auto me-5 gap-3">
+            <a href="entrar-cadastrar.html" id="link-login-header" title="Acesse sua conta ou crie um novo cadastro">
+                <button class="btn btn-outline-secondary btn-sm fs-6">
+                    Entrar / Cadastrar
+                </button>
+            </a>
+            
+            <div id="user-info-header" class="d-none align-items-center gap-2">
+                <span class="text-teal fw-semibold fs-6" id="user-greeting" aria-live="polite">Olá, Usuário!</span>
+                <button id="btn-logout" class="btn btn-sm btn-outline-danger fs-6" title="Sair da sua conta">
+                    Sair
+                </button>
+            </div>
+        </div>
+
+    </header>
+
+    <nav class="navbar-principal shadow" style="background-color: #18a5a7; padding: 1.5rem 0;">
+      <div
+        class="container d-flex flex-wrap justify-content-between align-items-center"
+      >
+        <a href="index.html" class="logo" title="Ir para a página inicial Conecta Vó">
+          <img src="/assets/logo.png" alt="Logo Conecta Vó" height="80" />
+        </a>
+
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="index.html">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="sobre.html">Sobre</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="aulas.html">Aulas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="ajuda.html">Ajuda</a>
+          </li>
+        </ul>
+
+        <div class="botoes-acao d-flex align-items-center gap-3 me-4">
+          <a href="voluntario.html">
+            <button class="btn btn-voluntario" title="Torne-se um voluntário e ajude a conectar gerações">Seja Voluntário</button>
+          </a>
+          <i
+            class="bi bi-search text-white busca-icon"
+            onclick="toggleBusca()"
+            title="Buscar conteúdo na plataforma"
+            aria-label="Abrir campo de busca"
+          ></i>
+        </div>
+      </div>
+    </nav>
+
+    <div id="campoBusca" class="container mt-3" style="display: none">
+      <form class="d-flex" onsubmit="buscarConteudo(event)" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Buscar conteúdo..."
+          aria-label="Buscar conteúdo no Conecta Vó"
+        />
+        <button class="btn btn-outline-success" type="submit" aria-label="Executar busca">Buscar</button>
+      </form>
+    </div>
+
+    <main class="container py-5">
+      <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="aulas.html">Aulas</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bancos e PIX</li>
+            </ol>
+        </nav>
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h1 class="main-title text-teal mb-2 text-center">Bancos e PIX</h1>
+          <h2 class="lead subtitle-lead text-center mb-4">Aprenda a usar o aplicativo do seu banco e a fazer transferências via PIX com segurança.</h2>
+
+          <div class="ratio ratio-16x9 mb-4" role="region" aria-label="Player de vídeo da aula sobre Bancos e PIX">
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="Vídeo-Aula: Bancos e PIX"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="d-flex justify-content-center justify-content-md-start gap-3 mb-4 flex-wrap">
+            <button class="btn btn-lg btn-verde btn-acao" onclick="finalizarLicao(100)" aria-label="Finalizar lição e ganhar 100 pontos">
+              <i class="bi bi-check-circle-fill" aria-hidden="true"></i> Finalizar Lição e Ganhar 100 Pontos!
+            </button>
+            <button class="btn btn-lg btn-download btn-acao" data-bs-toggle="modal" data-bs-target="#modalDownload" aria-label="Abrir opções de download de material de apoio">
+              <i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i> Download
+            </button>
+            <button class="btn btn-lg btn-gostei btn-acao" onclick="darLike()" aria-label="Marcar que gostou desta aula">
+              <i class="bi bi-hand-thumbs-up" aria-hidden="true"></i> Gostei (<span id="like-count">0</span>)
+            </button>
+          </div>
+
+          <hr class="mb-4" />
+
+          <section class="mb-5" aria-labelledby="descricaoTitulo">
+            <h3 id="descricaoTitulo">Descrição da Aula</h3>
+            <p>
+              Gerenciar suas finanças pelo celular é muito mais prático! Nesta aula, você aprenderá a abrir o aplicativo do seu banco, consultar extratos, pagar contas e, o mais moderno de tudo, como fazer e receber dinheiro usando o PIX de forma rápida e totalmente segura.
+            </p>
+          </section>
+
+          <section class="mb-5" aria-labelledby="comentariosTitulo">
+            <h3 id="comentariosTitulo">Comentários</h3>
+            <div class="card mb-3 p-3" role="status">
+              <p class="mb-1 fw-bold">Miguel Soares</p>
+              <p>
+                Eu só usava o caixa eletrônico. Depois desta aula, já estou pagando as contas e usando o PIX! Que facilidade!
+              </p>
+            </div>
+            <div class="card mb-3 p-3" role="status">
+              <p class="mb-1 fw-bold">Helena Santos</p>
+              <p>
+                As dicas de segurança para usar o app do banco foram as melhores. Obrigada por me ensinar a evitar os golpes.
+              </p>
+            </div>
+            <form onsubmit="adicionarComentario(event)">
+              <div class="mb-3">
+                <label for="comentario" class="form-label">Deixe seu comentário</label>
+                <textarea class="form-control" id="comentario" rows="3" aria-label="Escreva seu comentário sobre a aula"></textarea>
+              </div>
+              <button type="submit" class="btn btn-verde" aria-label="Enviar o comentário">Enviar Comentário</button>
+            </form>
+          </section>
+
+          <section aria-labelledby="proximasAulasTitulo">
+            <h3 id="proximasAulasTitulo">Próximas Aulas</h3>
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+              <div class="col">
+                <a href="compras-online-seguranca.html" class="text-decoration-none text-dark video-card-miniatura" title="Ir para a aula Compras Online com Segurança">
+                  <div class="row g-0">
+                    <div class="col-5">
+                      <img src="/assets/aulas_Compras_Online.png" class="img-fluid" alt="Miniatura de Aula de Compras Online" />
+                    </div>
+                    <div class="col-7 p-3">
+                      <h6 class="fw-bold mb-0">Compras Online</h6>
+                      <p class="text-muted mb-0">Descubra como comprar seus produtos.</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col">
+                <a href="navegando-na-internet.html" class="text-decoration-none text-dark video-card-miniatura" title="Ir para a aula Navegando na Internet">
+                  <div class="row g-0">
+                    <div class="col-5">
+                      <img src="/assets/aulas_Navegando_na_Internet.png" class="img-fluid" alt="Miniatura de Aula de Navegando na Internet" />
+                    </div>
+                    <div class="col-7 p-3">
+                      <h6 class="fw-bold mb-0">Navegando na Internet</h6>
+                      <p class="text-muted mb-0">Busca e segurança na web.</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col">
+                <a href="whatsapp-essencial.html" class="text-decoration-none text-dark video-card-miniatura" title="Ir para a aula WhatsApp Essencial">
+                  <div class="row g-0">
+                    <div class="col-5">
+                      <img src="/assets/aulas_WhatsApp_Essencial.png" class="img-fluid" alt="Miniatura de Aula de WhatsApp Essencial" />
+                    </div>
+                    <div class="col-7 p-3">
+                      <h6 class="fw-bold mb-0">WhatsApp Essencial</h6>
+                      <p class="text-muted mb-0">Aprenda a enviar mensagens e fotos.</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <div class="text-center mt-4">
+            <a href="aulas.html" class="btn btn-outline-secondary fw-semibold">Ver todas as aulas</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-teal text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+                    <a href="index.html" class="d-inline-block mb-3" title="Voltar para o Início">
+                        <img src="/assets/logo.png" alt="Logo Conecta Vó" height="80" />
+                    </a>
+                    <p class="mb-0">Tecnologia com carinho. Conectando gerações.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <h5>Navegação</h5>
+                    <ul class="list-unstyled d-flex flex-column flex-md-row justify-content-center gap-3">
+                        <li><a href="index.html" class="text-white text-decoration-none">Início</a></li>
+                        <li><a href="sobre.html" class="text-white text-decoration-none">Sobre</a></li>
+                        <li><a href="aulas.html" class="text-white text-decoration-none">Aulas</a></li>
+                        <li><a href="ajuda.html" class="text-white text-decoration-none">Ajuda</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Siga-nos</h5>
+                    <a href="https://www.facebook.com/" class="social-icon text-white me-3" target="_blank" rel="noopener noreferrer" aria-label="Siga-nos no Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/" class="social-icon text-white me-3" target="_blank" rel="noopener noreferrer" aria-label="Siga-nos no Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://twitter.com/" class="social-icon text-white" target="_blank" rel="noopener noreferrer" aria-label="Siga-nos no Twitter"><i class="bi bi-twitter"></i></a>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3 border-light">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">Copyright © 2025 Conecta Vó. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="modalDownload" tabindex="-1" aria-labelledby="modalDownloadLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDownloadLabel">Escolha o material para download</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p class="lead">O que você gostaria de baixar?</p>
+            <div class="d-flex justify-content-center gap-3">
+              <a href="#" download="aula-bancos-pix.pdf" class="btn btn-verde" aria-label="Baixar o guia em formato PDF">
+                <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Baixar PDF
+              </a>
+              <a href="#" download="aula-bancos-pix.mp4" class="btn btn-verde" aria-label="Baixar o vídeo da aula">
+                <i class="bi bi-camera-video" aria-hidden="true"></i> Baixar Vídeo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+        // --- Variáveis Globais (Local Storage Keys) ---
+        const LOGGED_KEY = 'conectaVo_logged';
+        const USER_NAME_KEY = 'conectaVo_userName';
+        const USER_POINTS_KEY = 'conectaVo_userPoints';
+        const LIKE_COUNT_KEY = 'conectaVo_pix_likes'; // CHAVE ÚNICA
+
+        // Inicializa o contador de likes no Local Storage, se não existir
+        if (!localStorage.getItem(LIKE_COUNT_KEY)) {
+            localStorage.setItem(LIKE_COUNT_KEY, 0);
+        }
+
+        // --- Funções de Feedback (Toast) ---
+        function showToast(message, type = 'success') {
+            const toastContainer = document.querySelector('.toast-container');
+            if (!toastContainer) return; 
+            
+            const newToastEl = document.createElement('div');
+            newToastEl.classList.add('toast', 'align-items-center', 'text-white', 'border-0');
+            newToastEl.classList.add(`bg-${type}`);
+            newToastEl.setAttribute('role', 'alert');
+            newToastEl.setAttribute('aria-live', 'assertive');
+            newToastEl.setAttribute('aria-atomic', 'true');
+            newToastEl.setAttribute('data-bs-delay', '5000');
+
+            newToastEl.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar notificação"></button>
+                </div>
+            `;
+            
+            toastContainer.appendChild(newToastEl);
+            const toast = new bootstrap.Toast(newToastEl);
+            toast.show();
+
+            newToastEl.addEventListener('hidden.bs.toast', () => {
+                newToastEl.remove();
+            });
+        }
+
+        // --- Funções de Estado (Checagem e Atualização do Header) ---
+
+        function updateHeaderState() {
+            // Simulação de login e pontos
+            if (!localStorage.getItem(USER_POINTS_KEY)) {
+                localStorage.setItem(USER_POINTS_KEY, 50); // Ponto inicial simulado
+            }
+
+            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+            const userName = localStorage.getItem(USER_NAME_KEY);
+
+            const loginLink = document.getElementById('link-login-header');
+            const userInfoHeader = document.getElementById('user-info-header');
+            const userGreeting = document.getElementById('user-greeting');
+            const btnLogout = document.getElementById('btn-logout');
+
+            if (loggedIn && userName) {
+                // Estado Logado
+                if (loginLink) loginLink.classList.add('d-none');
+                if (userInfoHeader) {
+                    userInfoHeader.classList.remove('d-none');
+                    userInfoHeader.classList.add('d-flex');
+                }
+                if (userGreeting) userGreeting.textContent = `Olá, ${userName}!`;
+                
+                // Adiciona o evento de Logout
+                if (btnLogout) {
+                    btnLogout.removeEventListener('click', handleLogout); 
+                    btnLogout.addEventListener('click', handleLogout);
+                }
+            } else {
+                // Estado Deslogado
+                if (loginLink) loginLink.classList.remove('d-none');
+                if (userInfoHeader) {
+                    userInfoHeader.classList.add('d-none');
+                    userInfoHeader.classList.remove('d-flex');
+                }
+            }
+
+            // Atualiza o contador de likes
+            const likeCount = localStorage.getItem(LIKE_COUNT_KEY) || 0;
+            const likeCountElement = document.getElementById('like-count');
+            if(likeCountElement) {
+                likeCountElement.textContent = likeCount;
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem(LOGGED_KEY);
+            localStorage.removeItem(USER_NAME_KEY);
+            showToast('Você saiu da sua conta. Até mais!', 'warning');
+            
+            setTimeout(() => {
+                window.location.reload(); 
+            }, 1000); 
+        }
+
+        // --- Funções da Página ---
+
+        function toggleBusca() {
+            const campo = document.getElementById('campoBusca');
+            campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function buscarConteudo(event) {
+            event.preventDefault();
+            const termo = event.target.querySelector('input').value.trim();
+            if (termo) {
+                showToast(`Você buscou por: "${termo}"`, 'info'); 
+                event.target.querySelector('input').value = '';
+            } else {
+                showToast('Por favor, digite um termo para buscar.', 'warning');
+            }
+        }
+        
+        function finalizarLicao(pontos) {
+            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+            if (!loggedIn) {
+                 showToast('Você precisa estar logado para ganhar pontos!', 'danger');
+                 return;
+            }
+
+            let currentPoints = parseInt(localStorage.getItem(USER_POINTS_KEY)) || 0;
+            currentPoints += pontos;
+            localStorage.setItem(USER_POINTS_KEY, currentPoints);
+
+            showToast(`Parabéns! Você ganhou ${pontos} pontos por finalizar a lição. Total: ${currentPoints} pontos.`, 'success');
+            
+            // Desabilita o botão para evitar pontos duplicados
+            const btn = document.querySelector('.btn-verde.btn-acao');
+            btn.disabled = true;
+            btn.textContent = "Lição Finalizada!";
+        }
+
+        function darLike() {
+            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+            if (!loggedIn) {
+                 showToast('Você precisa estar logado para interagir!', 'danger');
+                 return;
+            }
+
+            let currentLikes = parseInt(localStorage.getItem(LIKE_COUNT_KEY));
+            currentLikes += 1;
+            localStorage.setItem(LIKE_COUNT_KEY, currentLikes);
+            document.getElementById('like-count').textContent = currentLikes;
+            showToast('Obrigado por curtir a aula!', 'info');
+
+            // Desabilita o botão para evitar likes duplicados (simulação)
+            const btn = document.querySelector('.btn-gostei.btn-acao');
+            btn.disabled = true;
+        }
+
+        function adicionarComentario(event) {
+             event.preventDefault();
+             const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+             const comentarioText = document.getElementById('comentario').value.trim();
+
+            if (!loggedIn) {
+                 showToast('Você precisa estar logado para comentar!', 'danger');
+                 return;
+            }
+
+            if (comentarioText.length < 5) {
+                 showToast('Seu comentário é muito curto.', 'warning');
+                 return;
+            }
+
+            // Simulação de adição de comentário
+            showToast('Seu comentário foi enviado com sucesso!', 'success');
+            document.getElementById('comentario').value = '';
+        }
+
+        // --- Inicialização ---
+        document.addEventListener('DOMContentLoaded', updateHeaderState);
+    </script>
+</body>
+</html>
