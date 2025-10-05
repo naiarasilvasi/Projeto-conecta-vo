@@ -355,20 +355,26 @@
     </footer>
 
     <div class="modal fade" id="modalConquista" tabindex="-1" aria-labelledby="modalConquistaTitulo" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-center p-4">
-                <div class="modal-header border-0 pb-0">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <i class="bi bi-award" style="font-size: 4rem; color: #18a5a7;" aria-hidden="true"></i>
-                    <h4 class="mt-3" id="modalConquistaTitulo">Conquista Desbloqueada!</h4>
-                    <h6 class="text-muted" id="modalConquistaPontos"></h6>
-                    <p class="lead" id="modalConquistaDescricao"></p>
-                </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalConquistaImagem" src="" alt="Ícone da Conquista" class="img-fluid mb-3" style="max-height: 120px;">
+                
+                <h4 class="mt-3" id="modalConquistaTitulo">Conquista Desbloqueada!</h4>
+                <h6 class="text-muted" id="modalConquistaPontos"></h6>
+                
+                <p class="lead" id="modalConquistaDescricao"></p>
+                
+                <a id="btnDownloadMedalha" href="#" download="medalha.png" class="btn btn-teal mt-3 d-none">
+                    <i class="bi bi-download me-2"></i> Baixar Imagem da Medalha
+                </a>
             </div>
         </div>
     </div>
+</div>
     
     <div class="modal fade" id="modalPontuacao" tabindex="-1" aria-labelledby="modalPontuacaoLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -668,44 +674,61 @@
 
         // --- Funções de Modal (Exibição de Conquistas) ---
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const modalConquistaEl = document.getElementById('modalConquista');
-            if (modalConquistaEl) {
-                modalConquistaEl.addEventListener('show.bs.modal', function (event) {
-                    // Botão que acionou o modal
-                    const relatedTarget = event.relatedTarget;
-                    
-                    // Pega os dados do atributo data
-                    const nomeConquista = relatedTarget.getAttribute('data-conquista');
-                    const pontos = relatedTarget.getAttribute('data-pontos');
-                    const requisito = relatedTarget.getAttribute('data-requisito');
-                    const isConquistada = relatedTarget.querySelector('.conquista-medalha').classList.contains('conquistada');
-                    
-                    // Elementos do modal
-                    const modalTitle = modalConquistaEl.querySelector('#modalConquistaTitulo');
-                    const modalPontos = modalConquistaEl.querySelector('#modalConquistaPontos');
-                    const modalDescricao = modalConquistaEl.querySelector('#modalConquistaDescricao');
-                    const modalIcon = modalConquistaEl.querySelector('.bi-award');
+document.addEventListener('DOMContentLoaded', () => {
+    const modalConquistaEl = document.getElementById('modalConquista');
+    if (modalConquistaEl) {
+        modalConquistaEl.addEventListener('show.bs.modal', function (event) {
+            
+            // Botão que acionou o modal (o elemento <a>)
+            const relatedTarget = event.relatedTarget; 
+            const achievementDiv = relatedTarget.querySelector('.conquista-medalha');
 
-                    // Preenche o modal
-                    if (isConquistada) {
-                        modalTitle.textContent = `${nomeConquista} - CONQUISTADA!`;
-                        modalTitle.classList.remove('text-danger');
-                        modalTitle.classList.add('text-teal');
-                        modalPontos.textContent = `Você ganhou ${pontos} pontos.`;
-                        modalDescricao.textContent = `Parabéns! Requisito: ${requisito}`;
-                        modalIcon.style.color = '#18a5a7'; // Verde/Teal
-                    } else {
-                        modalTitle.textContent = `${nomeConquista} - Bloqueada`;
-                        modalTitle.classList.add('text-danger');
-                        modalTitle.classList.remove('text-teal');
-                        modalPontos.textContent = `Pontos: ${pontos} pontos.`;
-                        modalDescricao.textContent = `Para desbloquear, você precisa: ${requisito}`;
-                        modalIcon.style.color = '#dc3545'; // Vermelho
-                    }
-                });
+            // Pega os dados do atributo data
+            const nomeConquista = achievementDiv.getAttribute('data-conquista');
+            const pontos = achievementDiv.getAttribute('data-pontos');
+            const requisito = achievementDiv.getAttribute('data-requisito');
+            const isConquistada = achievementDiv.classList.contains('conquistada');
+            
+            // Pega o caminho da imagem do <img> dentro do <div>
+            const imagePath = achievementDiv.querySelector('img').src; 
+
+            // Elementos do modal
+            const modalTitle = modalConquistaEl.querySelector('#modalConquistaTitulo');
+            const modalPontos = modalConquistaEl.querySelector('#modalConquistaPontos');
+            const modalDescricao = modalConquistaEl.querySelector('#modalConquistaDescricao');
+            
+            // NOVO: Elementos de imagem e download
+            const modalIcon = modalConquistaEl.querySelector('#modalConquistaImagem');
+            const btnDownload = modalConquistaEl.querySelector('#btnDownloadMedalha');
+
+            // Preenche o modal
+            modalIcon.src = imagePath; // Atualiza a imagem
+
+            if (isConquistada) {
+                modalTitle.textContent = `${nomeConquista} - CONQUISTADA!`;
+                modalTitle.classList.remove('text-danger');
+                modalTitle.classList.add('text-teal');
+                modalPontos.textContent = `Você ganhou ${pontos} pontos.`;
+                modalDescricao.textContent = `Parabéns! Requisito: ${requisito}`;
+                
+                // Exibe e configura o botão de download
+                btnDownload.classList.remove('d-none');
+                btnDownload.href = imagePath; 
+                btnDownload.setAttribute('download', `Conquista_${nomeConquista.replace(/ /g, '_')}.png`);
+
+            } else {
+                modalTitle.textContent = `${nomeConquista} - Bloqueada`;
+                modalTitle.classList.add('text-danger');
+                modalTitle.classList.remove('text-teal');
+                modalPontos.textContent = `Pontos: ${pontos} pontos.`;
+                modalDescricao.textContent = `Para desbloquear, você precisa: ${requisito}`;
+                
+                // Esconde o botão de download
+                btnDownload.classList.add('d-none');
             }
         });
+    }
+});
 
         // --- Funções de Resgate de Prêmios ---
 
