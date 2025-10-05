@@ -585,93 +585,88 @@
             calculateAndSetTotalPoints(storedAchievements);
             updateAchievementsDisplay(); // Atualiza a exibição visual
         }
+function updateAchievementsDisplay() {
+    const storedAchievements = JSON.parse(localStorage.getItem(ACHIEVEMENT_KEY)) || {};
+    const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
 
-        function updateAchievementsDisplay() {
-            const storedAchievements = JSON.parse(localStorage.getItem(ACHIEVEMENT_KEY)) || {};
-            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+    const allMedalDivs = document.querySelectorAll('.conquista-medalha');
+    let hasAchievedAny = false;
 
-            const allMedalDivs = document.querySelectorAll('.conquista-medalha');
-            let hasAchievedAny = false;
-
-            allMedalDivs.forEach(div => {
-                const achievementName = div.getAttribute('data-conquista');
-                
-                // Garante que o estado visual das medalhas está sincronizado
-                if (loggedIn && storedAchievements[achievementName]) {
-                    div.classList.add('conquistada');
-                    div.classList.remove('bloqueada');
-                    hasAchievedAny = true;
-                } else {
-                    // Se não está logado ou não conquistou
-                    div.classList.remove('conquistada');
-                    div.classList.add('bloqueada');
-                }
-
-                // Gerencia o link de download/modal
-                const link = div.closest('a');
-                if (link) {
-                    if (div.classList.contains('conquistada')) {
-                        link.setAttribute('download', `medalha_${achievementName.replace(/ /g, '_')}.png`);
-                        link.setAttribute('aria-label', `Medalha ${achievementName}. Clique para baixar.`);
-                        // Não remove o data-bs-toggle, pois o modal deve continuar funcionando
-                    } else {
-                        link.removeAttribute('download');
-                        link.setAttribute('aria-label', `Medalha ${achievementName}. Bloqueada.`);
-                        link.href = '#'; 
-                    }
-                }
-            });
-            
-            // Gerencia a visibilidade da seção de medalhas
-            const msgMedalhas = document.getElementById('mensagemMedalhas');
-            const secaoMedalhas = document.getElementById('secaoMedalhas');
-            const btnMostrar = document.getElementById('btnMostrarMedalhas');
-
-            if (loggedIn) {
-                // Logado
-                btnMostrar.style.display = 'block'; // O botão sempre aparece para logados
-
-                if (hasAchievedAny) {
-                    // Logado e tem conquistas
-                    msgMedalhas.style.display = 'none';
-                    secaoMedalhas.style.display = 'block';
-                    btnMostrar.textContent = 'Ocultar Todas as Medalhas';
-                    
-                    btnMostrar.onclick = () => {
-                        if (secaoMedalhas.style.display === 'block') {
-                            secaoMedalhas.style.display = 'none';
-                            msgMedalhas.style.display = 'block';
-                            msgMedalhas.innerHTML = '<p class="lead">Continue explorando e aprendendo para desbloquear mais conquistas!</p>';
-                            btnMostrar.textContent = 'Visualizar Todas as Medalhas';
-                        } else {
-                            secaoMedalhas.style.display = 'block';
-                            msgMedalhas.style.display = 'none';
-                            btnMostrar.textContent = 'Ocultar Todas as Medalhas';
-                        }
-                    };
-
-                } else {
-                    // Logado, mas sem medalhas.
-                    msgMedalhas.style.display = 'block';
-                    secaoMedalhas.style.display = 'none';
-                    msgMedalhas.innerHTML = '<p class="lead">Parece que você ainda não conquistou nenhuma medalha! Continue explorando e aprendendo para desbloquear sua primeira conquista.</p>';
-                    btnMostrar.textContent = 'Visualizar Todas as Medalhas';
-
-                    btnMostrar.onclick = () => {
-                        msgMedalhas.style.display = 'none';
-                        secaoMedalhas.style.display = 'block';
-                        btnMostrar.textContent = 'Ocultar Todas as Medalhas';
-                    };
-                }
-            } else {
-                // Deslogado. Esconde a seção, mostra a mensagem adaptada.
-                msgMedalhas.style.display = 'block';
-                secaoMedalhas.style.display = 'none';
-                btnMostrar.style.display = 'none';
-                msgMedalhas.innerHTML = '<p class="lead">Faça <a href="entrar-cadastrar.html" class="text-teal text-decoration-none fw-semibold">login</a> para ver seu progresso, medalhas e pontos.</p>';
-            }
+    // --- PARTE 1: ATUALIZA O ESTADO VISUAL DE CADA MEDALHA (MANTIDA) ---
+    allMedalDivs.forEach(div => {
+        const achievementName = div.getAttribute('data-conquista');
+        
+        // Garante que o estado visual das medalhas está sincronizado
+        if (loggedIn && storedAchievements[achievementName]) {
+            div.classList.add('conquistada');
+            div.classList.remove('bloqueada');
+            hasAchievedAny = true;
+        } else {
+            // Se não está logado ou não conquistou
+            div.classList.remove('conquistada');
+            div.classList.add('bloqueada');
         }
 
+        // Gerencia o link de download/modal (MANTIDO)
+        const link = div.closest('a');
+        if (link) {
+            if (div.classList.contains('conquistada')) {
+                // Remove o download, pois a função do modal é melhor
+                link.removeAttribute('download'); 
+                link.setAttribute('aria-label', `Medalha ${achievementName}. Clique para ver detalhes e baixar.`);
+            } else {
+                link.removeAttribute('download');
+                link.setAttribute('aria-label', `Medalha ${achievementName}. Bloqueada.`);
+                link.href = '#'; 
+            }
+        }
+    });
+    
+    // --- PARTE 2: GERENCIA A VISIBILIDADE DA SEÇÃO (REFINADA) ---
+    const msgMedalhas = document.getElementById('mensagemMedalhas');
+    const secaoMedalhas = document.getElementById('secaoMedalhas');
+    const btnMostrar = document.getElementById('btnMostrarMedalhas');
+
+    if (loggedIn) {
+        // Logado: O botão sempre aparece para logados
+        btnMostrar.style.display = 'block'; 
+
+        // Se o usuário tem conquistas, a seção deve iniciar visível.
+        if (hasAchievedAny) {
+            msgMedalhas.style.display = 'none';
+            secaoMedalhas.style.display = 'block';
+            btnMostrar.textContent = 'Ocultar Todas as Medalhas';
+        } else {
+            // Logado, mas sem medalhas.
+            msgMedalhas.style.display = 'block';
+            secaoMedalhas.style.display = 'none';
+            msgMedalhas.innerHTML = '<p class="lead">Parece que você ainda não conquistou nenhuma medalha! Continue explorando e aprendendo para desbloquear sua primeira conquista.</p>';
+            btnMostrar.textContent = 'Visualizar Todas as Medalhas';
+        }
+
+        // Lógica de alternância (toggle) do botão
+        btnMostrar.onclick = () => {
+            if (secaoMedalhas.style.display === 'block') {
+                secaoMedalhas.style.display = 'none';
+                msgMedalhas.style.display = 'block';
+                // Mensagem customizada ao ocultar
+                msgMedalhas.innerHTML = '<p class="lead">Continue explorando e aprendendo para desbloquear mais conquistas!</p>'; 
+                btnMostrar.textContent = 'Visualizar Todas as Medalhas';
+            } else {
+                secaoMedalhas.style.display = 'block';
+                msgMedalhas.style.display = 'none';
+                btnMostrar.textContent = 'Ocultar Todas as Medalhas';
+            }
+        };
+
+    } else {
+        // Deslogado: Esconde a seção, mostra a mensagem adaptada.
+        msgMedalhas.style.display = 'block';
+        secaoMedalhas.style.display = 'none';
+        btnMostrar.style.display = 'none';
+        msgMedalhas.innerHTML = '<p class="lead">Faça <a href="entrar-cadastrar.html" class="text-teal text-decoration-none fw-semibold">login</a> para ver seu progresso, medalhas e pontos.</p>';
+    }
+}
         // --- Funções de Modal (Exibição de Conquistas) ---
 
 document.addEventListener('DOMContentLoaded', () => {
