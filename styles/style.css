@@ -12,7 +12,8 @@
     --teal-primary: #18a5a7; /* Cor principal, um verde-água vibrante */
     --teal-dark: #148c8e;    /* Um tom mais escuro para hover */
     --gold-accent: #ffd700;  /* Dourado para detalhes */
-    --bg-light: #f8f9fa;    /* Cor de fundo clara do Bootstrap */
+    --btn-amarelo-download: #f7d560; /* Cor específica para o botão de Download */
+    --bg-light: #f8f9fa;     /* Cor de fundo clara do Bootstrap */
     --text-color: #343a40;   /* Cor de texto padrão (cinza escuro) */
     --card-bg: #ffffff;      /* Cor de fundo de cards */
     --border-radius: 10px;
@@ -71,17 +72,42 @@ p { font-size: 1.1rem; }
     align-items: center;
 }
 
+/* ---------------------------------------------------- */
+/* AJUSTES NA NAVBAR: ALTURA, CENTRALIZAÇÃO E ALINHAMENTO LATERAL */
+/* ---------------------------------------------------- */
 .navbar-principal {
     background-color: var(--teal-primary);
-    padding: 5rem 0;
+    
+    /* ALTURA AJUSTADA: 250px */
+    min-height: 250px; 
+    
+    padding: 0; 
+    
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+    /* Tornar a navbar o contêiner Flex */
+    display: flex;
+    /* Garante que o container-fluid interno esteja alinhado verticalmente no meio */
+    align-items: center; 
 }
 
-.navbar-principal .container {
-    display: flex;
+/* CORREÇÃO AQUI: Usa .container-fluid para garantir o deslocamento horizontal */
+.navbar-principal .container-fluid { 
+    height: 100%; 
+    width: 100%;
+    
+    /* AJUSTE CRUCIAL PARA DESLOCAMENTO LATERAL. */
+    padding: 0 100px !important; 
+    
+    /* Garante que o contêiner interno também seja Flex para distribuir logo/menu/botões */
+    display: flex; 
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    
+    /* CENTRALIZAÇÃO VERTICAL DE LOGO, MENU E BOTÕES! */
+    align-items: center; 
+    
+    /* Distribuição horizontal: Joga Logo para a esquerda e Menu/Botões para a direita */
+    justify-content: space-between; 
 }
 
 .navbar-principal .nav {
@@ -90,11 +116,21 @@ p { font-size: 1.1rem; }
     list-style: none;
     padding: 0;
     margin: 0;
+    /* Adicionado flex-grow: 1 para o menu tentar ocupar o espaço central */
+    flex-grow: 1;
+    /* Alinhamento horizontal do menu dentro do espaço que ele ocupa */
+    text-align: center;
+}
+.navbar-principal .nav-item {
+    /* Centraliza os itens do menu dentro da área nav */
+    display: flex;
+    justify-content: center;
 }
 
+/* CORREÇÃO AQUI: Uso de !important para garantir o tamanho da letra */
 .navbar-principal .nav-link {
-    color: white;
-    font-size: 1.75rem;
+    color: white !important; /* Prioridade máxima para cor */
+    font-size: 1.5rem !important; /* Prioridade máxima para tamanho da fonte */
     font-weight: 600;
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -106,8 +142,9 @@ p { font-size: 1.1rem; }
 }
 
 .botoes-acao {
+    /* Garante alinhamento vertical para o botão e a lupa */
     display: flex;
-    align-items: center;
+    align-items: center; 
     gap: 1.5rem;
 }
 
@@ -115,9 +152,9 @@ p { font-size: 1.1rem; }
     background-color: white;
     color: var(--teal-primary);
     border: 1px solid var(--teal-primary);
-    padding: 8px 20px;
+    padding: 10px 24px;
     border-radius: 5px;
-    font-size: 1.625rem;
+    font-size: 1.1rem; 
     font-weight: 600;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -129,8 +166,12 @@ p { font-size: 1.1rem; }
     border-color: var(--teal-dark);
 }
 
-.busca-icon {
-    font-size: 1.625rem;
+/* CORREÇÃO AQUI: Uso de !important para garantir que a lupa apareça */
+.busca-icon, 
+.busca-icon.text-white, 
+.navbar-principal .busca-icon { /* Seletor mais específico para garantir prioridade */
+    color: white !important; /* Prioridade máxima para cor (resolve o problema de visibilidade) */
+    font-size: 1.8rem !important; /* Prioridade máxima para tamanho */
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -138,6 +179,8 @@ p { font-size: 1.1rem; }
 .busca-icon:hover {
     color: var(--gold-accent) !important;
 }
+/* ---------------------------------------------------- */
+
 
 /* Estilos do Conteúdo Principal (Main) */
 main {
@@ -149,10 +192,9 @@ main {
 
 section {
     margin-bottom: 4rem;
-    text-align: center;
 }
 
-/* Carrossel */
+/* Carrossel (Seção de Index) */
 .carousel-item {
     height: 500px;
     background-color: var(--bg-light);
@@ -164,9 +206,10 @@ section {
     object-fit: cover;
 }
 
-/* Seção de Atalhos (Cards) */
+/* Seção de Atalhos (Cards em Aulas.html) */
 .card-animado {
     transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: var(--border-radius); /* Adicionado */
 }
 
 .card-animado:hover {
@@ -278,7 +321,7 @@ footer a:hover {
 }
 
 /* Design Responsivo */
-@media (max-width: 768px) {
+@media (max-width: 992px) { /* Ajustei o breakpoint para alinhar com o col-lg-8/4 */
     .header-container {
         flex-direction: column;
         text-align: center;
@@ -295,9 +338,9 @@ footer a:hover {
         width: 100%;
         margin-left: 0;
     }
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.5rem; }
-    h3 { font-size: 1.25rem; }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
     .main-title { font-size: 2.5rem; }
     .subtitle-lead { font-size: 1.1rem; }
     .secao-formulario, .secao-voluntario {
@@ -310,52 +353,85 @@ footer a:hover {
     display: none;
 }
 
-/* Estilos da página de videochamada */
+/* ---------------------------------------------------- */
+/* Estilos da página de AULA INDIVIDUAL (ex: whatsapp.html) */
+/* ---------------------------------------------------- */
+
 .btn-acao {
     font-size: 1.1rem;
     transition: all 0.3s ease;
+    border-radius: 8px; /* Garantir que o raio seja o mesmo do btn-verde */
+    padding: 0.6rem 1.2rem; /* Garantir que o padding seja o mesmo do btn-verde */
 }
 
 .btn-acao:hover {
     transform: translateY(-2px);
 }
 
+/* Botão GOSTEI (usado como outline) */
 .btn-gostei {
-    color: #18a5a7;
+    /* Usando variáveis para consistência */
+    color: var(--teal-primary); 
     background-color: transparent;
-    border: 1px solid #18a5a7;
+    border: 2px solid var(--teal-primary); /* Aumentei a borda para destacar */
 }
 .btn-gostei:hover {
-    background-color: #18a5a7;
+    background-color: var(--teal-primary);
     color: white;
 }
 
+/* Botão DOWNLOAD */
 .btn-download {
-    background-color: #f7d560;
-    color: #333;
+    background-color: var(--btn-amarelo-download); /* Usando variável */
+    color: var(--text-color); /* Texto escuro para contraste */
     border: none;
+    font-weight: 600; /* Adicionado para destaque */
 }
 .btn-download:hover {
-    background-color: #e5c5a0;
+    background-color: #f0c950; /* Um tom ligeiramente mais escuro para hover */
 }
 
+/* Cards da Sidebar (Próximas Aulas) */
 .video-card-miniatura {
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    /* Melhorando o visual da miniatura */
+    background-color: var(--card-bg); /* Fundo branco */
+    border: 1px solid #e0e0e0 !important; /* Borda suave */
+    border-radius: var(--border-radius) !important;
     overflow: hidden;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
 }
 
 .video-card-miniatura:hover {
     transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-card-miniatura img {
+    border-radius: calc(var(--border-radius) / 2); /* Borda arredondada na imagem */
 }
 
 .video-card-miniatura .col-5 {
-    flex: 0 0 41.666667%;
-    max-width: 41.666667%;
+    /* Mantenha a proporção, mas garanta que o conteúdo fique visível */
+    flex: 0 0 40%; 
+    max-width: 40%;
 }
 
-/* Estilos para a página de Conquistas */
+.video-card-miniatura h6 {
+    /* Estilo para o título da miniatura */
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.video-card-miniatura p {
+    /* Estilo para a descrição da miniatura */
+    font-size: 0.85rem;
+    line-height: 1.2;
+    margin-top: 0.2rem;
+}
+
+
+/* Estilos para a página de Conquistas (mantidos) */
 .conquista-card {
     border: 1px solid #e0e0e0;
     border-radius: 12px;
@@ -385,18 +461,12 @@ footer a:hover {
     color: #6c757d;
 }
 
-/* Estilos da Página de Conquistas */
-/* ----- Seção de Pontuação ----- */
-.text-teal {
-    color: #18a5a7;
-}
-
 /* ----- Seção de Medalhas ----- */
 .conquista-medalha {
     width: 150px;
     height: 150px;
     background-color: #f0f0f0;
-    border-radius: 50%; /* Faz o card ser um círculo */
+    border-radius: 50%; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -443,4 +513,50 @@ footer a:hover {
 
 .conquista-medalha.bloqueada .conquista-icon {
     color: #a0a0a0;
+}
+
+/* ======================================= */
+/* ESTILOS DE BOTÕES DE AÇÃO (AULA) */
+/* ======================================= */
+.btn-acao {
+    border-radius: 50px; /* Borda arredondada */
+    padding: 10px 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+}
+
+/* NOVO BOTÃO CONQUISTA */
+.btn-conquista {
+    /* Cor de destaque para conquistas/pontos (Amarelo/Dourado) */
+    background-color: #ffc107; 
+    color: #333; /* Texto escuro */
+    border: 2px solid #ffc107;
+    transition: background-color 0.2s;
+}
+
+.btn-conquista:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+    color: #333;
+}
+
+/* Garante que os outros botões customizados também pareçam grandes */
+.btn-verde {
+    /* Mantenha o seu estilo verde/teal aqui */
+}
+
+/* ======================================= */
+/* AJUSTE DE ALINHAMENTO DO MENU LATERAL */
+/* ======================================= */
+
+/* Esta regra usa o media query para aplicar a margem apenas em telas grandes (desktop)
+    e alinha o painel lateral de "Próximas Aulas" com o player de vídeo. */
+@media (min-width: 992px) {
+    /* Seleciona o painel lateral */
+    .col-lg-4 .panel-lateral-aulas {
+        /* O valor de 100px compensa o título e o subtítulo
+            e desce o bloco para o nível do player de vídeo. */
+        margin-top: 100px !important; 
+    }
 }
