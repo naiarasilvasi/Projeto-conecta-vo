@@ -297,148 +297,196 @@
     ></script>
 
     <script>
-        const LOGGED_KEY = 'conectaVo_logged';
-        const USER_NAME_KEY = 'conectaVo_userName';
-        const USER_POINTS_KEY = 'conectaVo_userPoints';
+    // --- Variáveis Globais (Local Storage Keys) ---
+    const LOGGED_KEY = 'conectaVo_logged';
+    const USER_NAME_KEY = 'conectaVo_userName';
+    const USER_POINTS_KEY = 'conectaVo_userPoints';
+    const ACHIEVEMENT_KEY = 'conectaVo_achievements'; // Adicionada chave de conquista
 
-        function showToast(message, type = 'success') {
-            const toastContainer = document.querySelector('.toast-container');
-            if (!toastContainer) return; 
-            
-            const newToastEl = document.createElement('div');
-            newToastEl.classList.add('toast', 'align-items-center', 'text-white', 'border-0');
-            newToastEl.classList.add(`bg-${type}`);
-            newToastEl.setAttribute('role', 'alert');
-            newToastEl.setAttribute('aria-live', 'assertive');
-            newToastEl.setAttribute('aria-atomic', 'true');
-            newToastEl.setAttribute('data-bs-delay', '5000');
+    // --- Funções de Feedback (Toast) e Header (Inalteradas) ---
 
-            newToastEl.innerHTML = `
-                <div class="d-flex">
-                    <div class="toast-body">${message}</div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar notificação"></button>
-                </div>
-            `;
-            
-            toastContainer.appendChild(newToastEl);
-            const toast = new bootstrap.Toast(newToastEl);
-            toast.show();
+    function showToast(message, type = 'success') {
+        const toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) return; 
+        
+        const newToastEl = document.createElement('div');
+        newToastEl.classList.add('toast', 'align-items-center', 'text-white', 'border-0');
+        newToastEl.classList.add(`bg-${type}`);
+        newToastEl.setAttribute('role', 'alert');
+        newToastEl.setAttribute('aria-live', 'assertive');
+        newToastEl.setAttribute('aria-atomic', 'true');
+        newToastEl.setAttribute('data-bs-delay', '5000');
 
-            newToastEl.addEventListener('hidden.bs.toast', () => {
-                newToastEl.remove();
-            });
+        newToastEl.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar notificação"></button>
+            </div>
+        `;
+        
+        toastContainer.appendChild(newToastEl);
+        const toast = new bootstrap.Toast(newToastEl);
+        toast.show();
+
+        newToastEl.addEventListener('hidden.bs.toast', () => {
+            newToastEl.remove();
+        });
+    }
+
+    function updateHeaderState() {
+        if (!localStorage.getItem(USER_POINTS_KEY)) {
+            localStorage.setItem(USER_POINTS_KEY, 50); 
         }
 
-        function updateHeaderState() {
-            if (!localStorage.getItem(USER_POINTS_KEY)) {
-                localStorage.setItem(USER_POINTS_KEY, 50); 
+        const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+        const userName = localStorage.getItem(USER_NAME_KEY);
+
+        const loginLink = document.getElementById('link-login-header');
+        const userInfoHeader = document.getElementById('user-info-header');
+        const userGreeting = document.getElementById('user-greeting');
+        const btnLogout = document.getElementById('btn-logout');
+
+        if (loggedIn && userName) {
+            if (loginLink) loginLink.classList.add('d-none');
+            if (userInfoHeader) {
+                userInfoHeader.classList.remove('d-none');
+                userInfoHeader.classList.add('d-flex');
             }
-
-            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
-            const userName = localStorage.getItem(USER_NAME_KEY);
-
-            const loginLink = document.getElementById('link-login-header');
-            const userInfoHeader = document.getElementById('user-info-header');
-            const userGreeting = document.getElementById('user-greeting');
-            const btnLogout = document.getElementById('btn-logout');
-
-            if (loggedIn && userName) {
-                if (loginLink) loginLink.classList.add('d-none');
-                if (userInfoHeader) {
-                    userInfoHeader.classList.remove('d-none');
-                    userInfoHeader.classList.add('d-flex');
-                }
-                if (userGreeting) userGreeting.textContent = `Olá, ${userName}!`;
-                
-                if (btnLogout) {
-                    btnLogout.removeEventListener('click', handleLogout); 
-                    btnLogout.addEventListener('click', handleLogout);
-                }
-            } else {
-                if (loginLink) loginLink.classList.remove('d-none');
-                if (userInfoHeader) {
-                    userInfoHeader.classList.add('d-none');
-                    userInfoHeader.classList.remove('d-flex');
-                }
-            }
-        }
-
-        function handleLogout() {
-            localStorage.removeItem(LOGGED_KEY);
-            localStorage.removeItem(USER_NAME_KEY);
-            showToast('Você saiu da sua conta. Até mais!', 'warning');
+            if (userGreeting) userGreeting.textContent = `Olá, ${userName}!`;
             
-            setTimeout(() => {
-                window.location.reload(); 
-            }, 1000); 
-        }
-
-        function toggleBusca() {
-            const campo = document.getElementById('campoBusca');
-            campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function buscarConteudo(event) {
-            event.preventDefault();
-            const termo = event.target.querySelector('input').value.trim();
-            if (termo) {
-                showToast(`Você buscou por: "${termo}"`, 'info'); 
-                event.target.querySelector('input').value = '';
-            } else {
-                showToast('Por favor, digite um termo para buscar.', 'warning');
+            if (btnLogout) {
+                btnLogout.removeEventListener('click', handleLogout); 
+                btnLogout.addEventListener('click', handleLogout);
             }
+        } else {
+            if (loginLink) loginLink.classList.remove('d-none');
+            if (userInfoHeader) {
+                userInfoHeader.classList.add('d-none');
+                userInfoHeader.classList.remove('d-flex');
+            }
+        }
+    }
+
+    function handleLogout() {
+        localStorage.removeItem(LOGGED_KEY);
+        localStorage.removeItem(USER_NAME_KEY);
+        showToast('Você saiu da sua conta. Até mais!', 'warning');
+        
+        setTimeout(() => {
+            window.location.reload(); 
+        }, 1000); 
+    }
+
+    function toggleBusca() {
+        const campo = document.getElementById('campoBusca');
+        campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function buscarConteudo(event) {
+        event.preventDefault();
+        const termo = event.target.querySelector('input').value.trim();
+        if (termo) {
+            showToast(`Você buscou por: "${termo}"`, 'info'); 
+            event.target.querySelector('input').value = '';
+        } else {
+            showToast('Por favor, digite um termo para buscar.', 'warning');
+        }
+    }
+    
+    function finalizarLicao(pontos) {
+        const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+        if (!loggedIn) {
+            showToast('Você precisa estar logado para ganhar pontos!', 'danger');
+            return;
+        }
+
+        let currentPoints = parseInt(localStorage.getItem(USER_POINTS_KEY)) || 0;
+        currentPoints += pontos;
+        localStorage.setItem(USER_POINTS_KEY, currentPoints);
+
+        showToast(`Parabéns! Você ganhou ${pontos} pontos por finalizar a lição. Total: ${currentPoints} pontos.`, 'success');
+        
+        const btn = document.querySelector('.btn-verde.btn-acao');
+        btn.disabled = true;
+        btn.textContent = "Lição Finalizada!";
+    }
+    
+    // --- FUNÇÕES DE GAMIFICAÇÃO COPIADAS DA PÁGINA DE CONQUISTAS ---
+
+    /**
+     * Concede uma conquista se o usuário estiver logado e ainda não a tiver.
+     * @param {string} achievementId - O ID da conquista a ser concedida.
+     * @param {number} points - Os pontos a serem adicionados.
+     * @returns {boolean} - Retorna true se a conquista foi concedida, false caso contrário.
+     */
+    function grantAchievement(achievementId, points) {
+        const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+        if (!loggedIn) return false;
+
+        const storedAchievements = JSON.parse(localStorage.getItem(ACHIEVEMENT_KEY)) || {};
+        if (storedAchievements[achievementId]) {
+            return false; // Já tem a conquista
         }
         
-        function finalizarLicao(pontos) {
-            const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
-            if (!loggedIn) {
-                 showToast('Você precisa estar logado para ganhar pontos!', 'danger');
-                 return;
-            }
+        // 1. Concede a conquista
+        storedAchievements[achievementId] = true;
+        localStorage.setItem(ACHIEVEMENT_KEY, JSON.stringify(storedAchievements));
 
-            let currentPoints = parseInt(localStorage.getItem(USER_POINTS_KEY)) || 0;
-            currentPoints += pontos;
-            localStorage.setItem(USER_POINTS_KEY, currentPoints);
+        // 2. Adiciona os pontos
+        let currentPoints = parseInt(localStorage.getItem(USER_POINTS_KEY)) || 0;
+        currentPoints += points;
+        localStorage.setItem(USER_POINTS_KEY, currentPoints);
+        
+        // 3. Notifica o usuário
+        showToast(`🎉 Conquista Desbloqueada: ${achievementId}! Você ganhou ${points} pontos.`, 'success');
+        
+        return true;
+    }
+    
+    // --- FUNÇÃO ESPECÍFICA PARA O COMENTÁRIO ---
 
-            showToast(`Parabéns! Você ganhou ${pontos} pontos por finalizar a lição. Total: ${currentPoints} pontos.`, 'success');
-            
-            const btn = document.querySelector('.btn-verde.btn-acao');
-            btn.disabled = true;
-            btn.textContent = "Lição Finalizada!";
+    function checkAndGrantCommentAchievement() {
+        // Conquista "Primeiro Comentário" vale 50 pontos
+        grantAchievement('Primeiro Comentário', 50); 
+    }
+
+    // --- FUNÇÃO DE ADICIONAR COMENTÁRIO (ATUALIZADA) ---
+
+    function adicionarComentario(event) {
+        event.preventDefault();
+        const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
+        const comentarioText = document.getElementById('comentario').value.trim();
+        const userName = localStorage.getItem(USER_NAME_KEY) || 'Usuário Conecta Vó';
+        const listaComentarios = document.getElementById('lista-comentarios'); 
+
+        if (!loggedIn) {
+            showToast('Você precisa estar logado para comentar!', 'danger');
+            return;
         }
 
-        function adicionarComentario(event) {
-             event.preventDefault();
-             const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
-             const comentarioText = document.getElementById('comentario').value.trim();
-             const userName = localStorage.getItem(USER_NAME_KEY) || 'Usuário Conecta Vó';
-             const listaComentarios = document.getElementById('lista-comentarios'); 
-
-             if (!loggedIn) {
-                 showToast('Você precisa estar logado para comentar!', 'danger');
-                 return;
-             }
-
-             if (comentarioText.length < 5) {
-                 showToast('Seu comentário é muito curto.', 'warning');
-                 return;
-             }
-
-             const novoComentario = document.createElement('div');
-             novoComentario.classList.add('card', 'mb-3', 'p-3');
-             novoComentario.setAttribute('role', 'status');
-             novoComentario.innerHTML = `
-                 <p class="mb-1 fw-bold">${userName} (Novo)</p>
-                 <p>${comentarioText}</p>
-             `;
-             
-             listaComentarios.prepend(novoComentario);
-
-             showToast('Seu comentário foi enviado com sucesso!', 'success');
-             document.getElementById('comentario').value = '';
+        if (comentarioText.length < 5) {
+            showToast('Seu comentário é muito curto.', 'warning');
+            return;
         }
 
-        document.addEventListener('DOMContentLoaded', updateHeaderState);
-    </script>
+        const novoComentario = document.createElement('div');
+        novoComentario.classList.add('card', 'mb-3', 'p-3');
+        novoComentario.setAttribute('role', 'status');
+        novoComentario.innerHTML = `
+            <p class="mb-1 fw-bold">${userName} (Novo)</p>
+            <p>${comentarioText}</p>
+        `;
+        
+        listaComentarios.prepend(novoComentario);
+
+        showToast('Seu comentário foi enviado com sucesso!', 'success');
+        document.getElementById('comentario').value = '';
+
+        // CHAMA A FUNÇÃO DE CONQUISTA APÓS O SUCESSO DO COMENTÁRIO
+        checkAndGrantCommentAchievement();
+    }
+
+    document.addEventListener('DOMContentLoaded', updateHeaderState);
+</script>
 </body>
 </html>
