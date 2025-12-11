@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula: Compras Online com Segurança - Conecta Vó</title>
-    <meta name="description" content="Aprenda a fazer compras em sites e aplicativos de forma segura, como verificar a reputação da loja e quais métodos de pagamento são confiáveis." />
-    <meta name="keywords" content="compras, online, segurança, loja virtual, reputação, pagamento, internet, aula digital, idoso, Conecta Vó" />
+    <title>Aula: E-mail Sem Segredos - Conecta Vó</title>
+    <meta name="description" content="Aprenda a criar sua conta de e-mail, enviar mensagens com anexos, organizar sua caixa de entrada e identificar mensagens perigosas (spam)." />
+    <meta name="keywords" content="email, gmail, outlook, como usar email, criar email, spam, aula digital, idoso, Conecta Vó" />
     <meta name="author" content="Conecta Vó" />
 
-    <link 
-    rel="icon" 
-    href="../assets/logo cvo.ico">
+    <link rel="icon" href="assets/logo cvo.ico">
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -93,6 +91,7 @@
             onclick="toggleBusca()"
             title="Buscar conteúdo na plataforma"
             aria-label="Abrir campo de busca"
+            role="button"
           ></i>
         </div>
       </div>
@@ -105,6 +104,7 @@
           type="search"
           placeholder="Buscar conteúdo..."
           aria-label="Buscar conteúdo no Conecta Vó"
+          id="inputBusca"
         />
         <button class="btn btn-outline-secondary" type="submit" aria-label="Executar busca">Buscar</button>
       </form>
@@ -114,20 +114,19 @@
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="aulas.html" class="text-decoration-none">Aulas</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Compras Online com Segurança</li>
+                <li class="breadcrumb-item active" aria-current="page">E-mail Sem Segredos</li>
             </ol>
         </nav>
         
         <div class="row">
-            
             <div class="col-12 col-lg-8"> 
-                <h1 class="main-title mb-2">Compras Online com Segurança</h1>
-                <h2 class="lead subtitle-lead text-muted mb-4">Descubra como comprar seus produtos favoritos pela internet de forma segura.</h2>
+                <h1 class="main-title mb-2 text-teal">E-mail Sem Segredos</h1>
+                <h2 class="lead subtitle-lead text-muted mb-4">Aprenda a criar e gerenciar seu e-mail de forma simples e segura.</h2>
 
-                <div class="ratio ratio-16x9 shadow-lg rounded-3 mb-4" role="region" aria-label="Player de vídeo da aula sobre Compras Online">
+                <div class="ratio ratio-16x9 shadow-lg rounded-3 mb-4" role="region" aria-label="Player de vídeo da aula sobre E-mail">
                     <iframe
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                        title="Vídeo-Aula: Compras Online com Segurança"
+                        src="https://www.youtube.com/embed/5U9N5j1498I" 
+                        title="Vídeo-Aula: E-mail Sem Segredos"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen
@@ -135,8 +134,7 @@
                 </div>
 
                 <div class="d-flex justify-content-start align-items-center gap-3 mb-4 flex-wrap">
-                    
-                    <button class="btn btn-lg btn-verde btn-acao" onclick="finalizarLicao(100)" aria-label="Finalizar lição e ganhar 100 pontos">
+                    <button id="btn-finalizar-email" class="btn btn-lg btn-verde btn-acao" onclick="finalizarLicao(100)" aria-label="Finalizar lição e ganhar 100 pontos">
                         <i class="bi bi-check-circle-fill" aria-hidden="true"></i> Finalizar Lição e Ganhar 100 Pontos!
                     </button>
                     
@@ -163,42 +161,42 @@
                             <div class="accordion-body">
                                 <section aria-labelledby="descricaoTitulo">
                                     <p class="lead">
-                                        Comprar online é cômodo, mas exige atenção! Nesta aula, ensinamos como navegar em lojas virtuais, verificar se um site é confiável, escolher o método de pagamento mais seguro (como PIX ou cartão virtual) e acompanhar a entrega dos seus produtos sem estresse.
+                                        O **e-mail** é essencial para se comunicar e acessar serviços online. Nesta aula, você aprenderá a **criar sua conta**, a **escrever e responder e-mails**, **anexar documentos** ou fotos e, o mais importante, a **reconhecer e se proteger contra mensagens falsas** (Phishing e Spam).
                                     </p>
                                     <h4 class="mt-4">Conteúdo Destaque:</h4>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><i class="bi bi-shield-fill-check text-teal me-2"></i> Como Identificar Sites Confiáveis.</li>
-                                        <li class="list-group-item"><i class="bi bi-credit-card-fill text-teal me-2"></i> O Melhor Método de Pagamento (PIX e Cartão Virtual).</li>
-                                        <li class="list-group-item"><i class="bi bi-truck text-teal me-2"></i> Acompanhando a Entrega do Seu Produto.</li>
-                                        <li class="list-group-item"><i class="bi bi-lightbulb-fill text-teal me-2"></i> Dicas Essenciais para Evitar Golpes.</li>
+                                        <li class="list-group-item"><i class="bi bi-envelope-fill text-teal me-2"></i> Criando sua Primeira Conta de E-mail.</li>
+                                        <li class="list-group-item"><i class="bi bi-send-fill text-teal me-2"></i> Enviando e Respondendo Mensagens.</li>
+                                        <li class="list-group-item"><i class="bi bi-paperclip text-teal me-2"></i> Anexando Fotos e Documentos.</li>
+                                        <li class="list-group-item"><i class="bi bi-shield-fill-check text-teal me-2"></i> Identificando e Protegendo-se de Spam e Phishing.</li>
                                     </ul>
                                 </section>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <section class="mb-5" aria-labelledby="comentariosTitulo">
                     <h3 id="comentariosTitulo">Comentários</h3>
                     <div id="lista-comentarios">
                         <div class="card mb-3 p-3" role="status">
-                            <p class="mb-1 fw-bold">Dona Francisca</p>
-                            <p>
-                                Eu tinha medo de comprar na internet, mas a aula sobre como checar a loja me deu muita confiança. Já fiz minha primeira compra!
+                            <p class="mb-1 fw-bold">Dona Edite</p>
+                            <p class="mb-0">
+                                Não tinha e-mail e agora tenho! A explicação de como anexar as fotos foi muito útil.
                             </p>
                         </div>
                         <div class="card mb-3 p-3" role="status">
-                            <p class="mb-1 fw-bold">Paulo Henrique</p>
-                            <p>
-                                Muito importante a dica sobre o PIX. Rápido e seguro, adorei!
+                            <p class="mb-1 fw-bold">Carlos Alberto</p>
+                            <p class="mb-0">
+                                Obrigado pela aula sobre Spam. Eu sempre abria essas mensagens! Agora estou muito mais seguro.
                             </p>
                         </div>
                     </div>
 
                     <form onsubmit="adicionarComentario(event)">
                         <div class="mb-3">
-                            <label for="comentario" class="form-label">Deixe seu comentário</label>
-                            <textarea class="form-control" id="comentario" rows="3" aria-label="Escreva seu comentário sobre a aula"></textarea>
+                            <label for="comentario" class="form-label fw-semibold">Deixe seu comentário</label>
+                            <textarea class="form-control" id="comentario" rows="3" aria-label="Escreva seu comentário sobre a aula" required minlength="5" placeholder="Digite seu comentário aqui..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-verde" aria-label="Enviar o comentário">Enviar Comentário</button>
                     </form>
@@ -210,22 +208,10 @@
                     <h3 id="proximasAulasTitulo" class="text-teal mb-3">Próximas Aulas</h3>
                     <div class="d-grid gap-3">
                         
-                        <a href="bancos-e-pix.html" class="text-decoration-none text-dark video-card-miniatura p-2 d-block rounded border" title="Ir para a aula Bancos e PIX">
-                            <div class="row g-0 align-items-center">
-                                <div class="col-5">
-                                    <img src="/assets/aulas_Bancos_e_PIX.png" class="img-fluid rounded" alt="Miniatura de Aula de Bancos e PIX" />
-                                </div>
-                                <div class="col-7 ps-2">
-                                    <h6 class="fw-bold mb-0 text-truncate">Bancos e PIX</h6>
-                                    <p class="text-muted mb-0 small">Transfira dinheiro de forma segura.</p>
-                                </div>
-                            </div>
-                        </a>
-                        
                         <a href="navegando-na-internet.html" class="text-decoration-none text-dark video-card-miniatura p-2 d-block rounded border" title="Ir para a aula Navegando na Internet">
                             <div class="row g-0 align-items-center">
                                 <div class="col-5">
-                                    <img src="/assets/aulas_Navegando_na_Internet.png" class="img-fluid rounded" alt="Miniatura de Aula de Navegando na Internet" />
+                                    <img src="/assets/aulas_Navegando_na_Internet.png" class="img-fluid rounded" alt="Miniatura de Aula de Navegação na Internet" />
                                 </div>
                                 <div class="col-7 ps-2">
                                     <h6 class="fw-bold mb-0 text-truncate">Navegando na Internet</h6>
@@ -234,14 +220,26 @@
                             </div>
                         </a>
                         
-                        <a href="email-sem-segredos.html" class="text-decoration-none text-dark video-card-miniatura p-2 d-block rounded border" title="Ir para a aula E-mail Sem Segredos">
+                        <a href="google-maps-gps.html" class="text-decoration-none text-dark video-card-miniatura p-2 d-block rounded border" title="Ir para a aula Google Maps e GPS">
                             <div class="row g-0 align-items-center">
                                 <div class="col-5">
-                                    <img src="/assets/aulas_E_mail_Sem_Segredos.png" class="img-fluid rounded" alt="Miniatura de Aula de E-mail Sem Segredos" />
+                                    <img src="/assets/aulas_Google_Maps_e_ GPS.png" class="img-fluid rounded" alt="Miniatura de Aula de Google Maps e GPS" />
                                 </div>
                                 <div class="col-7 ps-2">
-                                    <h6 class="fw-bold mb-0 text-truncate">E-mail Sem Segredos</h6>
-                                    <p class="text-muted mb-0 small">Crie seu e-mail e converse com amigos.</p>
+                                    <h6 class="fw-bold mb-0 text-truncate">Google Maps e GPS</h6>
+                                    <p class="text-muted mb-0 small">Use o GPS para se localizar e traçar rotas.</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="compras-online-seguranca.html" class="text-decoration-none text-dark video-card-miniatura p-2 d-block rounded border" title="Ir para a aula Compras Online com Segurança">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-5">
+                                    <img src="/assets/aulas_Compras_Online.png" class="img-fluid rounded" alt="Miniatura de Aula de Compras Online" />
+                                </div>
+                                <div class="col-7 ps-2">
+                                    <h6 class="fw-bold mb-0 text-truncate">Compras Online</h6>
+                                    <p class="text-muted mb-0 small">Descubra como comprar seus produtos.</p>
                                 </div>
                             </div>
                         </a>
@@ -258,17 +256,17 @@
     <div class="modal fade" id="modalDownload" tabindex="-1" aria-labelledby="modalDownloadLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header bg-teal text-white">
             <h5 class="modal-title" id="modalDownloadLabel">Escolha o material para download</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body text-center">
             <p class="lead">O que você gostaria de baixar?</p>
             <div class="d-flex justify-content-center gap-3">
-              <a href="#" download="aula-compras-online.pdf" class="btn btn-verde" aria-label="Baixar o guia em formato PDF">
+              <a href="#" download="aula-email-sem-segredos.pdf" class="btn btn-verde" aria-label="Baixar o guia em formato PDF">
                 <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Baixar PDF
               </a>
-              <a href="#" download="aula-compras-online.mp4" class="btn btn-verde" aria-label="Baixar o vídeo da aula">
+              <a href="#" download="aula-email-sem-segredos.mp4" class="btn btn-verde" aria-label="Baixar o vídeo da aula">
                 <i class="bi bi-camera-video" aria-hidden="true"></i> Baixar Vídeo
               </a>
             </div>
@@ -307,11 +305,12 @@
             <hr class="mt-4 mb-3 border-light">
             <div class="row">
                 <div class="col-12 text-center">
-                    <p class="mb-0">Copyright © 2025 Conecta Vó. Todos os direitos reservados.</p>
+                    <p class="mb-0 small">Copyright © 2025 Conecta Vó. Todos os direitos reservados.</p>
                 </div>
             </div>
         </div>
     </footer>
+
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -320,21 +319,21 @@
     ></script>
 
     <script>
-    // --- Variáveis Globais (Local Storage Keys) ---
+    // --- Constantes (Local Storage Keys) ---
     const LOGGED_KEY = 'conectaVo_logged';
     const USER_NAME_KEY = 'conectaVo_userName';
     const USER_POINTS_KEY = 'conectaVo_userPoints';
     const ACHIEVEMENT_KEY = 'conectaVo_achievements'; // Chave para armazenar conquistas
+    const LESSON_ID = 'email'; // ID ÚNICO da lição
+    const LESSON_FINISHED_KEY = `conectaVo_lesson_${LESSON_ID}_finished`; // Chave para rastrear conclusão da lição
 
-    // --- Funções de Feedback (Toast) e Header ---
-
+    // --- Funções de Feedback (Toast) ---
     function showToast(message, type = 'success') {
         const toastContainer = document.querySelector('.toast-container');
         if (!toastContainer) return; 
         
         const newToastEl = document.createElement('div');
-        newToastEl.classList.add('toast', 'align-items-center', 'text-white', 'border-0');
-        newToastEl.classList.add(`bg-${type}`);
+        newToastEl.classList.add('toast', 'align-items-center', 'text-white', 'border-0', `bg-${type}`);
         newToastEl.setAttribute('role', 'alert');
         newToastEl.setAttribute('aria-live', 'assertive');
         newToastEl.setAttribute('aria-atomic', 'true');
@@ -356,21 +355,29 @@
         });
     }
 
-    function updateHeaderState() {
-        // Inicializa pontos se não existirem
+    // --- Funções de Estado (Inicialização do Local Storage e UI) ---
+    function initializeLocalStorage() {
         if (!localStorage.getItem(USER_POINTS_KEY)) {
-            localStorage.setItem(USER_POINTS_KEY, 50); 
+            localStorage.setItem(USER_POINTS_KEY, 50); // Ponto inicial simulado
         }
+        if (!localStorage.getItem(ACHIEVEMENT_KEY)) {
+            localStorage.setItem(ACHIEVEMENT_KEY, JSON.stringify({})); // Inicializa conquistas como objeto vazio
+        }
+        if (!localStorage.getItem(LESSON_FINISHED_KEY)) {
+            localStorage.setItem(LESSON_FINISHED_KEY, 'false'); // Inicializa status de conclusão da lição
+        }
+    }
 
+    function updateHeaderState() {
         const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
-        const userName = localStorage.getItem(USER_NAME_KEY);
+        const userName = localStorage.getItem(USER_NAME_KEY) || 'Usuário';
 
         const loginLink = document.getElementById('link-login-header');
         const userInfoHeader = document.getElementById('user-info-header');
         const userGreeting = document.getElementById('user-greeting');
         const btnLogout = document.getElementById('btn-logout');
 
-        if (loggedIn && userName) {
+        if (loggedIn) {
             if (loginLink) loginLink.classList.add('d-none');
             if (userInfoHeader) {
                 userInfoHeader.classList.remove('d-none');
@@ -389,34 +396,64 @@
                 userInfoHeader.classList.remove('d-flex');
             }
         }
+        updateLessonButtonState(); // Atualiza o estado do botão de finalizar lição
     }
 
     function handleLogout() {
         localStorage.removeItem(LOGGED_KEY);
         localStorage.removeItem(USER_NAME_KEY);
-        showToast('Você saiu da sua conta. Até mais!', 'warning');
+        showToast('Você saiu da sua conta. Até mais!', 'info');
         
         setTimeout(() => {
             window.location.reload(); 
         }, 1000); 
     }
 
+    // --- Funções de Interação da Página ---
+
     function toggleBusca() {
         const campo = document.getElementById('campoBusca');
-        campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
+        const inputBusca = document.getElementById('inputBusca');
+        if (campo.style.display === 'none') {
+            campo.style.display = 'block';
+            inputBusca.focus(); 
+        } else {
+            campo.style.display = 'none';
+            inputBusca.value = ''; // Limpa o campo ao fechar
+        }
     }
 
     function buscarConteudo(event) {
         event.preventDefault();
-        const termo = event.target.querySelector('input').value.trim();
+        const input = document.getElementById('inputBusca');
+        const termo = input.value.trim();
         if (termo) {
             showToast(`Você buscou por: "${termo}"`, 'info'); 
-            event.target.querySelector('input').value = '';
+            input.value = '';
+            document.getElementById('campoBusca').style.display = 'none'; 
         } else {
             showToast('Por favor, digite um termo para buscar.', 'warning');
         }
     }
     
+    function updateLessonButtonState() {
+        const finished = localStorage.getItem(LESSON_FINISHED_KEY) === 'true';
+        const btnFinalizar = document.getElementById('btn-finalizar-email'); // Usar o ID específico
+        if (btnFinalizar) {
+            if (finished) {
+                btnFinalizar.disabled = true;
+                btnFinalizar.innerHTML = '<i class="bi bi-check-circle-fill" aria-hidden="true"></i> Lição Finalizada!';
+                btnFinalizar.classList.remove('btn-verde');
+                btnFinalizar.classList.add('btn-secondary');
+            } else {
+                btnFinalizar.disabled = false;
+                btnFinalizar.innerHTML = '<i class="bi bi-check-circle-fill" aria-hidden="true"></i> Finalizar Lição e Ganhar 100 Pontos!';
+                btnFinalizar.classList.remove('btn-secondary');
+                btnFinalizar.classList.add('btn-verde');
+            }
+        }
+    }
+
     function finalizarLicao(pontos) {
         const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
         if (!loggedIn) {
@@ -424,15 +461,19 @@
             return;
         }
 
+        if (localStorage.getItem(LESSON_FINISHED_KEY) === 'true') {
+             showToast('Você já finalizou esta lição!', 'info');
+             return;
+        }
+
         let currentPoints = parseInt(localStorage.getItem(USER_POINTS_KEY)) || 0;
         currentPoints += pontos;
         localStorage.setItem(USER_POINTS_KEY, currentPoints);
+        localStorage.setItem(LESSON_FINISHED_KEY, 'true'); // Marca como finalizada
 
         showToast(`Parabéns! Você ganhou ${pontos} pontos por finalizar a lição. Total: ${currentPoints} pontos.`, 'success');
         
-        const btn = document.querySelector('.btn-verde.btn-acao');
-        btn.disabled = true;
-        btn.textContent = "Lição Finalizada!";
+        updateLessonButtonState(); // Atualiza o estado visual do botão
     }
     
     // --- FUNÇÕES DE GAMIFICAÇÃO (Conquistas) ---
@@ -479,7 +520,8 @@
     function adicionarComentario(event) {
         event.preventDefault();
         const loggedIn = localStorage.getItem(LOGGED_KEY) === 'true';
-        const comentarioText = document.getElementById('comentario').value.trim();
+        const comentarioTextarea = document.getElementById('comentario');
+        const comentarioText = comentarioTextarea.value.trim();
         const userName = localStorage.getItem(USER_NAME_KEY) || 'Usuário Conecta Vó';
         const listaComentarios = document.getElementById('lista-comentarios'); 
 
@@ -489,10 +531,10 @@
         }
 
         if (comentarioText.length < 5) {
-            showToast('Seu comentário é muito curto.', 'warning');
+            showToast('Seu comentário é muito curto. Por favor, escreva no mínimo 5 caracteres.', 'warning');
             return;
         }
-        
+
         const novoComentario = document.createElement('div');
         novoComentario.classList.add('card', 'mb-3', 'p-3');
         novoComentario.setAttribute('role', 'status');
@@ -501,20 +543,22 @@
             <p>${comentarioText}</p>
         `;
         
-        // Adiciona o novo comentário ao topo da lista
         if (listaComentarios) {
-            listaComentarios.prepend(novoComentario);
+            listaComentarios.prepend(novoComentario); // Adiciona o novo comentário ao topo da lista
         }
 
-
         showToast('Seu comentário foi enviado com sucesso!', 'success');
-        document.getElementById('comentario').value = '';
+        comentarioTextarea.value = ''; // Limpa o campo
 
-        // CHAMA A FUNÇÃO DE CONQUISTA APÓS O SUCESSO DO COMENTÁRIO
-        checkAndGrantCommentAchievement();
+        checkAndGrantCommentAchievement(); // CHAMA A FUNÇÃO DE CONQUISTA APÓS O SUCESSO DO COMENTÁRIO
     }
 
-    document.addEventListener('DOMContentLoaded', updateHeaderState);
+    // --- Inicialização ---
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeLocalStorage();
+        updateHeaderState();
+        updateLessonButtonState(); // Garante que o botão da lição esteja no estado correto ao carregar
+    });
 </script>
 </body>
 </html>

@@ -464,7 +464,7 @@ footer a:hover {
 /* ----- Seção de Medalhas ----- */
 .conquista-medalha {
     width: 150px;
-    height: 150px;
+    padding: 10px 0;
     background-color: #f0f0f0;
     border-radius: 50%; 
     display: flex;
@@ -490,7 +490,7 @@ footer a:hover {
 .conquista-nome {
     font-size: 0.9rem;
     font-weight: 600;
-    margin-top: 5px;
+    margin-top: 8px;
     color: #333;
 }
 
